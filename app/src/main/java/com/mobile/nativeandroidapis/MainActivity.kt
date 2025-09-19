@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.mobile.nativeandroidapis.bluetooth.presentation.view.BluetoothScreen
 import com.mobile.nativeandroidapis.ui.theme.NativeAndroidAPIsTheme
 
 class MainActivity : ComponentActivity() {
@@ -20,10 +21,12 @@ class MainActivity : ComponentActivity() {
         setContent {
             NativeAndroidAPIsTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+
+                    BluetoothScreen(modifier = Modifier.padding(innerPadding))
+//                    Greeting(
+//                        name = "Android",
+//                        modifier = Modifier.padding(innerPadding)
+//                    )
                 }
             }
         }

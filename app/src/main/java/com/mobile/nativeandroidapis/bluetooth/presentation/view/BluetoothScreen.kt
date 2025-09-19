@@ -24,10 +24,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.mobile.nativeandroidapis.bluetooth.presentation.viewmodel.BluetoothViewModel
+import org.koin.androidx.compose.koinViewModel
 
 
 @Composable
-fun BluetoothScreen(viewModel: BluetoothViewModel) {
+fun BluetoothScreen(modifier: Modifier = Modifier, viewModel: BluetoothViewModel = koinViewModel()) {
     val context = LocalContext.current
 
     // List of permissions needed
@@ -56,7 +57,7 @@ fun BluetoothScreen(viewModel: BluetoothViewModel) {
     val devices by viewModel.devices.collectAsState()
     val messages by viewModel.messages.collectAsState()
 
-    Column(Modifier.fillMaxSize().padding(16.dp)) {
+    Column(modifier.fillMaxSize().padding(16.dp)) {
         Button(onClick = {
             multiplePermissionsLauncher.launch(permissions.toTypedArray())
             viewModel.startDiscovery()
@@ -64,7 +65,7 @@ fun BluetoothScreen(viewModel: BluetoothViewModel) {
             Text("Scan for Devices")
         }
 
-        Spacer(Modifier.height(16.dp))
+        Spacer(modifier.height(16.dp))
 
         Text("Discovered Devices:")
         @SuppressLint("MissingPermission") // 👈 applied directly here if you prefer
@@ -74,7 +75,7 @@ fun BluetoothScreen(viewModel: BluetoothViewModel) {
             }
         }
 
-        Spacer(Modifier.height(16.dp))
+        Spacer(modifier.height(16.dp))
 
         Text("Messages:")
         LazyColumn {
