@@ -59,6 +59,8 @@ dependencies {
 
 
     //koin libraries for di
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.koin.compose.viewmodel.v401)
     implementation(libs.koin.androidx.compose)
     implementation(libs.koin.android)
     implementation(libs.koin.core)
