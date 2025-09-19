@@ -35,5 +35,33 @@ class BluetoothViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
+    @RequiresPermission(Manifest.permission.BLUETOOTH_SCAN)
+    fun startDiscovery() {
+        _devices.value = emptyList()
+        val filter = IntentFilter(BluetoothDevice.ACTION_FOUND)
+        getApplication<Application>().registerReceiver(receiver, filter)
+        bluetoothAdapter?.startDiscovery()
+    }
+
+    @RequiresPermission(Manifest.permission.BLUETOOTH_SCAN)
+    fun stopDiscovery() {
+        try {
+            getApplication<Application>().unregisterReceiver(receiver)
+        } catch (_: Exception) { }
+        bluetoothAdapter?.cancelDiscovery()
+    }
+
+    fun appendMessage(msg: String) {
+        viewModelScope.launch {
+            _messages.value = _messages.value + msg
+        }
+    }
+
+    @RequiresPermission(Manifest.permission.BLUETOOTH_SCAN)
+    override fun onCleared() {
+        super.onCleared()
+        stopDiscovery()
+    }
+
 
 }
