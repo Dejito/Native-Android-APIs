@@ -1,11 +1,15 @@
 package com.mobile.nativeandroidapis.bluetooth.presentation.viewmodel
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Application
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.content.*
+import android.content.pm.PackageManager
+import android.os.Build
 import androidx.annotation.RequiresPermission
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -35,19 +39,38 @@ class BluetoothViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
-    @RequiresPermission(Manifest.permission.BLUETOOTH_SCAN)
     fun startDiscovery() {
+        val ctx = getApplication<Application>()
+
+        val hasPermission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            ContextCompat.checkSelfPermission(
+                ctx, Manifest.permission.BLUETOOTH_SCAN
+            ) == PackageManager.PERMISSION_GRANTED
+        } else {
+            ContextCompat.checkSelfPermission(
+                ctx, Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        }
+
+        if (!hasPermission) {
+            // skip safely
+            return
+        }
+
         _devices.value = emptyList()
         val filter = IntentFilter(BluetoothDevice.ACTION_FOUND)
-        getApplication<Application>().registerReceiver(receiver, filter)
+        ctx.registerReceiver(receiver, filter)
+        @SuppressLint("MissingPermission") // 👈 applied directly here if you prefer
         bluetoothAdapter?.startDiscovery()
     }
 
-    @RequiresPermission(Manifest.permission.BLUETOOTH_SCAN)
+
+    @SuppressLint("MissingPermission")
     fun stopDiscovery() {
         try {
             getApplication<Application>().unregisterReceiver(receiver)
         } catch (_: Exception) {
+            // ignore if already unregistered
         }
         bluetoothAdapter?.cancelDiscovery()
     }
@@ -58,7 +81,7 @@ class BluetoothViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
-    @RequiresPermission(Manifest.permission.BLUETOOTH_SCAN)
+    @SuppressLint("MissingPermission")
     override fun onCleared() {
         super.onCleared()
         stopDiscovery()
