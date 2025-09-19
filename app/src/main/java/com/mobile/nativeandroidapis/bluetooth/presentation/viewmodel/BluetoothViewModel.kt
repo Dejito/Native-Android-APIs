@@ -47,7 +47,8 @@ class BluetoothViewModel(application: Application) : AndroidViewModel(applicatio
     fun stopDiscovery() {
         try {
             getApplication<Application>().unregisterReceiver(receiver)
-        } catch (_: Exception) { }
+        } catch (_: Exception) {
+        }
         bluetoothAdapter?.cancelDiscovery()
     }
 
