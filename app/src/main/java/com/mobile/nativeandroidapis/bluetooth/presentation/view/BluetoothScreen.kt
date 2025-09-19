@@ -1,5 +1,7 @@
 package com.mobile.nativeandroidapis.bluetooth.presentation.view
 
+import android.annotation.SuppressLint
+import android.os.Build
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -25,7 +27,7 @@ import com.mobile.nativeandroidapis.bluetooth.presentation.viewmodel.BluetoothVi
 
 
 @Composable
-fun BluetoothScreen(viewModel: BluetoothViewModel = viewModel()) {
+fun BluetoothScreen(viewModel: BluetoothViewModel) {
     val context = LocalContext.current
 
     // List of permissions needed
@@ -65,6 +67,7 @@ fun BluetoothScreen(viewModel: BluetoothViewModel = viewModel()) {
         Spacer(Modifier.height(16.dp))
 
         Text("Discovered Devices:")
+        @SuppressLint("MissingPermission") // 👈 applied directly here if you prefer
         LazyColumn {
             items(devices) { device ->
                 Text("${device.name ?: "Unknown"} - ${device.address}")
