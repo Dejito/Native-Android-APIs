@@ -10,7 +10,6 @@ import android.content.pm.PackageManager
 import com.mobile.nativeandroidapis.bluetooth.domain.BluetoothController
 import com.mobile.nativeandroidapis.bluetooth.domain.BluetoothDeviceDomain
 import com.plcoding.bluetoothchat.data.chat.FoundDeviceReceiver
-import com.plcoding.bluetoothchat.data.chat.toBluetoothDeviceDomain
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

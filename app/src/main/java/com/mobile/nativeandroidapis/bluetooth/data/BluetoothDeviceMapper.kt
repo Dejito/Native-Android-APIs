@@ -1,8 +1,8 @@
-package com.plcoding.bluetoothchat.data.chat
+package com.mobile.nativeandroidapis.bluetooth.data
 
 import android.annotation.SuppressLint
 import android.bluetooth.BluetoothDevice
-import com.plcoding.bluetoothchat.domain.chat.BluetoothDeviceDomain
+import com.mobile.nativeandroidapis.bluetooth.domain.BluetoothDeviceDomain
 
 @SuppressLint("MissingPermission")
 fun BluetoothDevice.toBluetoothDeviceDomain(): BluetoothDeviceDomain {
