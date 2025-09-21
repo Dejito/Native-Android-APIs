@@ -1,58 +1,33 @@
-// presentation/BluetoothViewModel.kt
-package com.example.bluetooth.presentation
+package com.mobile.nativeandroidapis.bluetooth.presentation.viewmodel
 
-import android.bluetooth.BluetoothDevice
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mobile.nativeandroidapis.bluetooth.data.BluetoothRepository
-import com.mobile.nativeandroidapis.bluetooth.domain.ConnectionState
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
-import java.util.UUID
 
 class BluetoothViewModel(
-    private val repository: BluetoothRepository
-) : ViewModel() {
+    private val bluetoothController: BluetoothController
+): ViewModel() {
 
-    // 🔹 Expose connection state
-    val connectionState: StateFlow<ConnectionState> =
-        repository.connectionState.stateIn(
-            viewModelScope,
-            SharingStarted.Lazily,
-            ConnectionState.Idle
+    private val _state = MutableStateFlow(BluetoothUiState())
+    val state = combine(
+        bluetoothController.scannedDevices,
+        bluetoothController.pairedDevices,
+        _state
+    ) { scannedDevices, pairedDevices, state ->
+        state.copy(
+            scannedDevices = scannedDevices,
+            pairedDevices = pairedDevices
         )
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), _state.value)
 
-    // 🔹 Expose discovered devices
-    val devices: StateFlow<List<BluetoothDevice>> =
-        repository.devices.stateIn(
-            viewModelScope,
-            SharingStarted.Lazily,
-            emptyList()
-        )
-
-    fun startDiscovery() {
-        viewModelScope.launch {
-            repository.startDiscovery()
-        }
+    fun startScan() {
+        bluetoothController.startDiscovery()
     }
 
-    fun connectToDevice(device: BluetoothDevice, uuid: UUID) {
-        viewModelScope.launch {
-            repository.connect(device, uuid)
-        }
-    }
-
-    fun sendMessage(message: String) {
-        viewModelScope.launch {
-            repository.send(message.toByteArray())
-        }
-    }
-
-    fun disconnect() {
-        viewModelScope.launch {
-            repository.disconnect()
-        }
+    fun stopScan() {
+        bluetoothController.stopDiscovery()
     }
 }

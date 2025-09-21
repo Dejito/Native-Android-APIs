@@ -1,7 +1,6 @@
 package com.mobile.nativeandroidapis.bluetooth.di
 
 import android.bluetooth.BluetoothAdapter
-import com.example.bluetooth.presentation.BluetoothViewModel
 import com.mobile.nativeandroidapis.bluetooth.data.BluetoothRepository
 import com.mobile.nativeandroidapis.bluetooth.data.BluetoothRepositoryImpl
 import org.koin.android.ext.koin.androidContext
