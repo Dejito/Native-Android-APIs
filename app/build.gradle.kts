@@ -56,6 +56,21 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    implementation(libs.androidx.navigation.compose)
+
+
+    //qr code and camera libraries
+    implementation(libs.zxing.core)
+    implementation(libs.lightspark.compose.qr.code)
+
+
+    // Use the same version for CameraX and CameraX extensions
+    implementation(libs.camera.core)
+    implementation(libs.camera.camera2)
+    implementation(libs.camera.lifecycle)
+    implementation(libs.camera.view)
+
+    implementation(libs.androidx.navigation.compose)
 
 
     //koin libraries for di

@@ -22,11 +22,10 @@ class MainActivity : ComponentActivity() {
             NativeAndroidAPIsTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
 
-                    BluetoothScreen(modifier = Modifier.padding(innerPadding))
-//                    Greeting(
-//                        name = "Android",
-//                        modifier = Modifier.padding(innerPadding)
-//                    )
+                    Greeting(
+                        name = "Android",
+                        modifier = Modifier.padding(innerPadding)
+                    )
                 }
             }
         }
