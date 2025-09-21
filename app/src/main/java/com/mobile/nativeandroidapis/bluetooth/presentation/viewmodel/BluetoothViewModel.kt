@@ -2,7 +2,6 @@ package com.mobile.nativeandroidapis.bluetooth.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mobile.nativeandroidapis.bluetooth.data.AndroidBluetoothController
 import com.mobile.nativeandroidapis.bluetooth.domain.BluetoothController
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -10,7 +9,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 
 class BluetoothViewModel(
-    private val bluetoothController: AndroidBluetoothController
+    private val bluetoothController: BluetoothController
 ): ViewModel() {
 
     private val _state = MutableStateFlow(BluetoothUiState())
@@ -25,11 +24,11 @@ class BluetoothViewModel(
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), _state.value)
 
-    fun startScan() {
-        bluetoothController.startDiscovery()
-    }
+    fun startScan() = bluetoothController.startDiscovery()
+    fun stopScan() = bluetoothController.stopDiscovery()
 
-    fun stopScan() {
-        bluetoothController.stopDiscovery()
+    override fun onCleared() {
+        super.onCleared()
+        bluetoothController.release()
     }
 }
