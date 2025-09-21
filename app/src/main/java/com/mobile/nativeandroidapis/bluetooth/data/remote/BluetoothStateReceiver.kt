@@ -1,4 +1,4 @@
-package com.plcoding.bluetoothchat.data.chat
+package com.mobile.nativeandroidapis.bluetooth.data.remote
 
 import android.bluetooth.BluetoothDevice
 import android.content.BroadcastReceiver

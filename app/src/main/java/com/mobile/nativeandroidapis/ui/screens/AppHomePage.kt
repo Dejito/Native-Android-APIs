@@ -30,7 +30,7 @@ import com.mobile.nativeandroidapis.router.Navigator
 @Composable
 fun AppHomepage(navigator: Navigator) {
     Scaffold(
-        topBar = { PetraAppBar(title = "Homepage") }
+        topBar = { PetraAppBar(title = "Homepage", enabledBackButton = false) }
     ) { paddingValues ->
 
         DisabledBackPress()
