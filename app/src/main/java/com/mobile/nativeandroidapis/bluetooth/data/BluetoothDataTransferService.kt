@@ -2,6 +2,7 @@ package com.mobile.nativeandroidapis.bluetooth.data
 
 import android.bluetooth.BluetoothSocket
 import com.mobile.nativeandroidapis.bluetooth.domain.BluetoothMessage
+import com.mobile.nativeandroidapis.bluetooth.domain.TransferFailedException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -22,7 +23,7 @@ class BluetoothDataTransferService(
                 val byteCount = try {
                     socket.inputStream.read(buffer)
                 } catch(e: IOException) {
-                    throw TransferFailedException()
+                    throw TransferFailedException() as Throwable
                 }
 
                 emit(
