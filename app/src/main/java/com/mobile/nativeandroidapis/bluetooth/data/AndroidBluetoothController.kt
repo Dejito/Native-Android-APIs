@@ -12,6 +12,8 @@ import android.content.IntentFilter
 import android.content.pm.PackageManager
 import com.mobile.nativeandroidapis.bluetooth.domain.BluetoothController
 import com.mobile.nativeandroidapis.bluetooth.domain.BluetoothDeviceDomain
+import com.mobile.nativeandroidapis.bluetooth.domain.ConnectionResult
+import com.plcoding.bluetoothchat.data.chat.BluetoothStateReceiver
 import com.plcoding.bluetoothchat.data.chat.FoundDeviceReceiver
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -68,7 +70,7 @@ class AndroidBluetoothController(
     }
 
     private val bluetoothStateReceiver = BluetoothStateReceiver { isConnected, bluetoothDevice ->
-        if(bluetoothAdapter?.bondedDevices?.contains(bluetoothDevice) == true) {
+        if (bluetoothAdapter?.bondedDevices?.contains(bluetoothDevice) == true) {
             _isConnected.update { isConnected }
         } else {
             CoroutineScope(Dispatchers.IO).launch {
