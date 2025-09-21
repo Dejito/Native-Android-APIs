@@ -6,46 +6,61 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.mobile.nativeandroidapis.bluetooth.presentation.viewmodel.BluetoothViewModel
+import org.koin.androidx.compose.koinViewModel
 
 
 @Composable
-fun DeviceScreen() {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-    ) {
-        BluetoothDeviceList(
-            pairedDevices = state.pairedDevices,
-            scannedDevices = state.scannedDevices,
-            onClick = {},
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f)
-        )
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceAround
-        ) {
-            Button(onClick = onStartScan) {
-                Text(text = "Start scan")
-            }
-            Button(onClick = onStopScan) {
-                Text(text = "Stop scan")
+fun DeviceScreen(bluetoothViewModel: BluetoothViewModel = koinViewModel()) {
+
+    val devices = bluetoothViewModel.devices.collectAsState().value
+
+    Scaffold(
+        topBar = {},
+        content = { paddingValues ->
+            Column(
+                modifier = Modifier
+                    .padding(paddingValues)
+                    .padding(16.dp)
+                    .fillMaxSize()
+            ) {
+                BluetoothDeviceList(
+                    pairedDevices = devices.pairedDevices,
+                    scannedDevices = devices.scannedDevices,
+                    onClick = {},
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
+                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceAround
+                ) {
+                    Button(onClick = onStartScan) {
+                        Text(text = "Start scan")
+                    }
+                    Button(onClick = onStopScan) {
+                        Text(text = "Stop scan")
+                    }
+                }
             }
         }
-    }
+    )
+
 }
 
 @Composable
 fun BluetoothDeviceList(
-    pairedDevices: List<BluetoothDevice>,
-    scannedDevices: List<BluetoothDevice>,
+    pairedDevices: List<com.mobile.nativeandroidapis.bluetooth.domain.BluetoothDevice>,
+    scannedDevices: List<com.mobile.nativeandroidapis.bluetooth.domain.BluetoothDevice>,
     onClick: (BluetoothDevice) -> Unit,
     modifier: Modifier = Modifier
 ) {

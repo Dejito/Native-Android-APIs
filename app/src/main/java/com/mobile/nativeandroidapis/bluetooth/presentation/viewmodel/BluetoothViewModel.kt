@@ -13,7 +13,7 @@ class BluetoothViewModel(
 ): ViewModel() {
 
     private val _state = MutableStateFlow(BluetoothUiState())
-    val state = combine(
+    val devices = combine(
         bluetoothController.scannedDevices,
         bluetoothController.pairedDevices,
         _state
