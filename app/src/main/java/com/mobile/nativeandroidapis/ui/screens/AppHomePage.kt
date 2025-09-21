@@ -12,10 +12,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,19 +29,24 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.mobile.petra.router.Navigator
 
 
 @Composable
-fun AppHomepage() {
+fun AppHomepage(navigator: Navigator) {
     Scaffold(
         topBar = {}
     ) { paddingValues ->
-        Column(modifier = Modifier
-            .padding(paddingValues)
-            .padding(16.dp)
-            .fillMaxSize()
+        Column(
+            modifier = Modifier
+                .padding(paddingValues)
+                .padding(16.dp)
+                .fillMaxSize()
         ) {
-
+            AppHomePageCard(title = "Bluetooth", onClick = {})
+            AppHomePageCard(title = "QRCode", onClick = {})
+            AppHomePageCard(title = "SQLite Cypher", onClick = {})
+            AppHomePageCard(title = "NFC", onClick = {})
         }
     }
 }
@@ -45,8 +54,8 @@ fun AppHomepage() {
 
 @Composable
 internal fun AppHomePageCard(
-    title: String,fontSize: Int = 15,
-    paddingAll: Int = 23, onClick: ()-> Unit = {}
+    title: String, fontSize: Int = 15,
+    onClick: () -> Unit = {}
 ) {
     Card(
         elevation = CardDefaults.cardElevation(2.dp),
@@ -58,40 +67,24 @@ internal fun AppHomePageCard(
                 .paddingFromBaseline(bottom = 20.dp)
                 .clickable { onClick() }
         ) {
-            Box(
-                modifier = Modifier
-                    .padding(paddingAll.dp)
-            ) {
-                Icon(
-                    painter = painterResource(id = icon),
-                    contentDescription = null,
-                    tint = Color(0xFF1E312D),
-                    modifier = Modifier.size(22.dp)
-                )
-            }
             Spacer(modifier = Modifier.weight(0.001f))
-            Column(
-                modifier = Modifier.weight(0.8f),
-                verticalArrangement = Arrangement.SpaceEvenly,
-            ) {
-                Text(
-                    text = title,
-//                    style = MaterialTheme.typography.body1,
-                    fontSize = fontSize.sp,
-                    fontWeight = FontWeight.W500,
-                    modifier = Modifier.padding(bottom = 3.dp)
-                )
-            }
+
+            Text(
+                text = title,
+                fontSize = fontSize.sp,
+                fontWeight = FontWeight.W500,
+                modifier = Modifier.padding(bottom = 3.dp)
+            )
+
             IconButton(
                 onClick = onClick,
                 modifier = Modifier
                     .weight(0.2f)
                     .size(58.dp)
             ) {
-//                Switch(checked = false, onCheckedChange = {})
                 Icon(
-                    imageVector = Icons.Filled.ChevronRight,
-                    contentDescription = stringResource(R.string.forward_icon_button),
+                    imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                    contentDescription = ("forward nav icon"),
                 )
             }
         }
