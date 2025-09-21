@@ -27,12 +27,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mobile.nativeandroidapis.bluetooth.domain.BluetoothDeviceDomain
 import com.mobile.nativeandroidapis.bluetooth.presentation.viewmodel.BluetoothViewModel
+import com.mobile.nativeandroidapis.ui.screens.PetraAppBar
 import com.mobile.nativeandroidapis.ui.screens.displayToastMessage
 import org.koin.androidx.compose.koinViewModel
 
 
 @Composable
-fun BluetoothHomePage(
+fun BluetoothHomeScreen(
+    onNavUp: () -> Unit,
     bluetoothViewModel: BluetoothViewModel = koinViewModel()
 ) {
 
@@ -53,13 +55,16 @@ fun BluetoothHomePage(
             ChatScreen()
         }
         else -> {
-            DeviceScreen()
+            DeviceScreen(
+                onNavUp = onNavUp
+            )
         }
     }
 }
 
 @Composable
 fun DeviceScreen(
+    onNavUp: () -> Unit,
     bluetoothViewModel: BluetoothViewModel = koinViewModel()
 ) {
 
@@ -116,7 +121,7 @@ fun DeviceScreen(
 
 
     Scaffold(
-        topBar = {},
+        topBar = { PetraAppBar(title = "Homepage", onClick = onNavUp) },
         content = { paddingValues ->
             Column(
                 modifier = Modifier

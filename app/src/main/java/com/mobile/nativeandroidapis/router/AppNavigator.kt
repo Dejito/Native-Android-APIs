@@ -5,10 +5,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.mobile.nativeandroidapis.bluetooth.presentation.view.BluetoothHomePage
+import com.mobile.nativeandroidapis.bluetooth.presentation.view.BluetoothHomeScreen
 import com.mobile.nativeandroidapis.ui.screens.AppHomepage
-import com.mobile.petra.router.Navigator
-import com.mobile.petra.router.Routes
 
 
 @SuppressLint("NewApi")
@@ -24,7 +22,7 @@ fun AppNavigators() {
             AppHomepage(navigation)
         }
         composable(Routes.Bluetooth.route) {
-            BluetoothHomePage()
+            BluetoothHomeScreen(onNavUp = {navigation.goBack()})
         }
 
     }
