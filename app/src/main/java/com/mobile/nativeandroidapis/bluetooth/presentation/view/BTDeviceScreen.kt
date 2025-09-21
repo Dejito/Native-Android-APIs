@@ -143,11 +143,16 @@ fun DeviceScreen(
                     }) {
                         Text(text = "Stop scan")
                     }
+                    Button(onClick = { bluetoothViewModel.waitForIncomingConnections() }) {
+                        Text(text = "Enable Visibility")
+                    }
+
                 }
             }
         }
     )
 }
+
 
 @Composable
 fun BluetoothDeviceList(
