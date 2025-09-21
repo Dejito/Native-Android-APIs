@@ -1,4 +1,4 @@
-package com.plcoding.bluetoothchat.domain.chat
+package com.mobile.nativeandroidapis.bluetooth.domain
 
 typealias BluetoothDeviceDomain = BluetoothDevice
 
