@@ -1,4 +1,4 @@
-package com.mobile.nativeandroidapis.bluetooth.presentation.view
+package com.mobile.nativeandroidapis.ui.screens
 
 import android.content.Context
 import android.widget.Toast
