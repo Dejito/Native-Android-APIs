@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.layout.size
@@ -59,16 +60,19 @@ internal fun AppHomePageCard(
 ) {
     Card(
         elevation = CardDefaults.cardElevation(2.dp),
-        modifier = Modifier.padding(top = 20.dp)
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White
+        ),
+        modifier = Modifier.padding(top = 24.dp)
+            .clickable { onClick() }
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
-                .paddingFromBaseline(bottom = 20.dp)
-                .clickable { onClick() }
+                .padding(horizontal = 16.dp)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Spacer(modifier = Modifier.weight(0.001f))
-
             Text(
                 text = title,
                 fontSize = fontSize.sp,
@@ -79,7 +83,6 @@ internal fun AppHomePageCard(
             IconButton(
                 onClick = onClick,
                 modifier = Modifier
-                    .weight(0.2f)
                     .size(58.dp)
             ) {
                 Icon(
