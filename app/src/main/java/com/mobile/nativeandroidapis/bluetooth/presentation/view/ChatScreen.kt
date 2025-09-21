@@ -26,8 +26,6 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun ChatScreen(
-    onDisconnect: () -> Unit,
-    onSendMessage: (String) -> Unit,
     bluetoothViewModel: BluetoothViewModel = koinViewModel()
 ) {
     val vm = bluetoothViewModel.devices.collectAsState().value
@@ -48,7 +46,7 @@ fun ChatScreen(
                 text = "Messages",
                 modifier = Modifier.weight(1f)
             )
-            IconButton(onClick = onDisconnect) {
+            IconButton(onClick = { bluetoothViewModel.disconnectFromDevice()} ) {
                 Icon(
                     imageVector = Icons.Default.Close,
                     contentDescription = "Disconnect"
@@ -91,7 +89,7 @@ fun ChatScreen(
                 }
             )
             IconButton(onClick = {
-                onSendMessage(message.value)
+                bluetoothViewModel.sendMessage(message.value)
                 message.value = ""
                 keyboardController?.hide()
             }) {
