@@ -1,6 +1,13 @@
 package com.mobile.nativeandroidapis.bluetooth.presentation.view
 
+import android.Manifest
+import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
+import android.bluetooth.BluetoothManager
+import android.content.Intent
+import android.os.Build
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -9,8 +16,11 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -19,7 +29,50 @@ import org.koin.androidx.compose.koinViewModel
 
 
 @Composable
-fun DeviceScreen(bluetoothViewModel: BluetoothViewModel = koinViewModel()) {
+fun DeviceScreen(
+    bluetoothViewModel: BluetoothViewModel = koinViewModel()
+) {
+    val context = LocalContext.current
+    val bluetoothManager = remember {
+        context.getSystemService(BluetoothManager::class.java)
+    }
+    val bluetoothAdapter = remember {
+        bluetoothManager?.adapter
+    }
+    val isBluetoothEnabled = bluetoothAdapter?.isEnabled == true
+
+    // Launcher to enable Bluetooth
+    val enableBluetoothLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult()
+    ) { /* no result needed */ }
+
+    // Launcher for permissions
+    val permissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestMultiplePermissions()
+    ) { perms ->
+        val canEnableBluetooth =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                perms[Manifest.permission.BLUETOOTH_CONNECT] == true
+            } else true
+
+        if (canEnableBluetooth && !isBluetoothEnabled) {
+            enableBluetoothLauncher.launch(
+                Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+            )
+        }
+    }
+
+    // Request permissions once
+    LaunchedEffect(Unit) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            permissionLauncher.launch(
+                arrayOf(
+                    Manifest.permission.BLUETOOTH_SCAN,
+                    Manifest.permission.BLUETOOTH_CONNECT
+                )
+            )
+        }
+    }
 
     val devices = bluetoothViewModel.devices.collectAsState().value
 
@@ -40,19 +93,20 @@ fun DeviceScreen(bluetoothViewModel: BluetoothViewModel = koinViewModel()) {
                         .fillMaxWidth()
                         .weight(1f)
                 )
+
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceAround
                 ) {
                     Button(onClick = {
                         bluetoothViewModel.startScan()
-                    println("start scanning...")
+                        println("start scanning...")
                     }) {
                         Text(text = "Start scan")
                     }
-                    Button(onClick = { bluetoothViewModel.stopScan()
+                    Button(onClick = {
+                        bluetoothViewModel.stopScan()
                         println("stop scanning...")
-
                     }) {
                         Text(text = "Stop scan")
                     }
@@ -60,7 +114,6 @@ fun DeviceScreen(bluetoothViewModel: BluetoothViewModel = koinViewModel()) {
             }
         }
     )
-
 }
 
 @Composable
