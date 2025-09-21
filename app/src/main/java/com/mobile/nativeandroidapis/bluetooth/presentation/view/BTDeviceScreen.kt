@@ -31,7 +31,7 @@ import org.koin.androidx.compose.koinViewModel
 
 
 @Composable
-fun BluetoothDevicesScreen(
+fun BluetoothHomePage(
     bluetoothViewModel: BluetoothViewModel = koinViewModel()
 ) {
 
@@ -47,6 +47,9 @@ fun BluetoothDevicesScreen(
                 CircularProgressIndicator()
                 Text(text = "Connecting...")
             }
+        }
+        device.isConnected -> {
+            ChatScreen()
         }
         else -> {
             DeviceScreen()
