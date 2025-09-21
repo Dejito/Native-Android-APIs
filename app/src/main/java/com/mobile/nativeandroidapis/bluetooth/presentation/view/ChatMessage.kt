@@ -5,18 +5,16 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.plcoding.bluetoothchat.domain.chat.BluetoothMessage
-import com.plcoding.bluetoothchat.ui.theme.BluetoothChatTheme
-import com.plcoding.bluetoothchat.ui.theme.OldRose
-import com.plcoding.bluetoothchat.ui.theme.Vanilla
+import com.mobile.nativeandroidapis.bluetooth.domain.BluetoothMessage
+import com.mobile.nativeandroidapis.ui.theme.OldRose
+import com.mobile.nativeandroidapis.ui.theme.Vanilla
 
 @Composable
 fun ChatMessage(
@@ -47,20 +45,6 @@ fun ChatMessage(
             text = message.message,
             color = Color.Black,
             modifier = Modifier.widthIn(max = 250.dp)
-        )
-    }
-}
-
-@Preview
-@Composable
-fun ChatMessagePreview() {
-    BluetoothChatTheme {
-        ChatMessage(
-            message = BluetoothMessage(
-                message = "Hello World!",
-                senderName = "Pixel 6",
-                isFromLocalUser = false
-            )
         )
     }
 }
