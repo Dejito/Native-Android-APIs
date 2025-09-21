@@ -18,5 +18,5 @@ val bluetoothModule = module {
     single { AndroidBluetoothController(
         context = androidContext()
     ) }
-    viewModel { BluetoothViewModel(get()) } // use viewModel DSL instead of single
+    single { BluetoothViewModel(get()) }
 }

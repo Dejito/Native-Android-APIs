@@ -44,10 +44,16 @@ fun DeviceScreen(bluetoothViewModel: BluetoothViewModel = koinViewModel()) {
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceAround
                 ) {
-                    Button(onClick = { bluetoothViewModel.startScan() }) {
+                    Button(onClick = {
+                        bluetoothViewModel.startScan()
+                    println("start scanning...")
+                    }) {
                         Text(text = "Start scan")
                     }
-                    Button(onClick = { bluetoothViewModel.stopScan() }) {
+                    Button(onClick = { bluetoothViewModel.stopScan()
+                        println("stop scanning...")
+
+                    }) {
                         Text(text = "Stop scan")
                     }
                 }
