@@ -1,5 +1,6 @@
-package com.plcoding.bluetoothchat.domain.chat
+package com.mobile.nativeandroidapis.bluetooth.domain
 
+import com.plcoding.bluetoothchat.domain.chat.BluetoothDevice
 import kotlinx.coroutines.flow.StateFlow
 
 interface BluetoothController {
