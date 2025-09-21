@@ -15,11 +15,12 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
-class BluetoothViewModel(
+
+class BluetoothViewModel (
     private val bluetoothController: BluetoothController
 ): ViewModel() {
-
 
     private val _devices = MutableStateFlow(BluetoothUiState())
     val devices = combine(
@@ -29,7 +30,8 @@ class BluetoothViewModel(
     ) { scannedDevices, pairedDevices, state ->
         state.copy(
             scannedDevices = scannedDevices,
-            pairedDevices = pairedDevices
+            pairedDevices = pairedDevices,
+            messages = if(state.isConnected) state.messages else emptyList()
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), _devices.value)
 
@@ -70,6 +72,17 @@ class BluetoothViewModel(
             .listen()
     }
 
+    fun sendMessage(message: String) {
+        viewModelScope.launch {
+            val bluetoothMessage = bluetoothController.trySendMessage(message)
+            if(bluetoothMessage != null) {
+                _devices.update { it.copy(
+                    messages = it.messages + bluetoothMessage
+                ) }
+            }
+        }
+    }
+
     fun startScan() {
         bluetoothController.startDiscovery()
     }
@@ -86,6 +99,11 @@ class BluetoothViewModel(
                         isConnected = true,
                         isConnecting = false,
                         errorMessage = null
+                    ) }
+                }
+                is ConnectionResult.TransferSucceeded -> {
+                    _devices.update { it.copy(
+                        messages = it.messages + result.message
                     ) }
                 }
                 is ConnectionResult.Error -> {
