@@ -20,7 +20,7 @@ fun AppNavigators() {
     NavHost(navController, startDestination = Routes.Home.route) {
 
         composable(Routes.Home.route) {
-            LoginScreen(navigation)
+//            LoginScreen(navigation)
         }
 
     }

@@ -43,8 +43,9 @@ camera-camera2 = { module = "androidx.camera:camera-camera2", version = "camera-
 camera-lifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = "camera-core" }
 camera-view = { module = "androidx.camera:camera-view", version.ref = "camera-view" }
 lightspark-compose-qr-code = { module = "com.lightspark:compose-qr-code", version.ref = "lightspark-compose-qr-code" }
-androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
-
+navigation-fragment = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigationCompose" }
+navigation-ui = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigationCompose" }
+navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 
 
 [plugins]
