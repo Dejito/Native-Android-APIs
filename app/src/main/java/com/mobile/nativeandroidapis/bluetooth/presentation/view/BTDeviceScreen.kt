@@ -44,10 +44,10 @@ fun DeviceScreen(bluetoothViewModel: BluetoothViewModel = koinViewModel()) {
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceAround
                 ) {
-                    Button(onClick = onStartScan) {
+                    Button(onClick = { bluetoothViewModel.startScan() }) {
                         Text(text = "Start scan")
                     }
-                    Button(onClick = onStopScan) {
+                    Button(onClick = { bluetoothViewModel.stopScan() }) {
                         Text(text = "Stop scan")
                     }
                 }
@@ -61,7 +61,7 @@ fun DeviceScreen(bluetoothViewModel: BluetoothViewModel = koinViewModel()) {
 fun BluetoothDeviceList(
     pairedDevices: List<com.mobile.nativeandroidapis.bluetooth.domain.BluetoothDevice>,
     scannedDevices: List<com.mobile.nativeandroidapis.bluetooth.domain.BluetoothDevice>,
-    onClick: (BluetoothDevice) -> Unit,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
@@ -80,7 +80,7 @@ fun BluetoothDeviceList(
                 text = device.name ?: "(No name)",
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable { onClick(device) }
+                    .clickable { onClick() }
                     .padding(16.dp)
             )
         }
@@ -98,7 +98,7 @@ fun BluetoothDeviceList(
                 text = device.name ?: "(No name)",
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable { onClick(device) }
+                    .clickable { onClick() }
                     .padding(16.dp)
             )
         }
