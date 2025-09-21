@@ -1,8 +1,8 @@
 package com.mobile.nativeandroidapis.bluetooth.di
 
 import android.bluetooth.BluetoothAdapter
-import com.mobile.nativeandroidapis.bluetooth.data.BluetoothRepository
-import com.mobile.nativeandroidapis.bluetooth.data.BluetoothRepositoryImpl
+import com.mobile.nativeandroidapis.bluetooth.data.AndroidBluetoothController
+import com.mobile.nativeandroidapis.bluetooth.presentation.viewmodel.BluetoothViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
@@ -11,12 +11,12 @@ import org.koin.dsl.module
 //    single<BluetoothRepository> { BluetoothRepositoryImpl(BluetoothAdapter.getDefaultAdapter()) }
 //    single { BluetoothViewModel(get()) }
 //}
+
+//single { SLRepositoryImpl() }
+
 val bluetoothModule = module {
-    single<BluetoothRepository> {
-        BluetoothRepositoryImpl(
-            androidContext(),               // pass Context
-            BluetoothAdapter.getDefaultAdapter() // pass BluetoothAdapter
-        )
-    }
+    single { AndroidBluetoothController(
+        context = androidContext()
+    ) }
     viewModel { BluetoothViewModel(get()) } // use viewModel DSL instead of single
 }
