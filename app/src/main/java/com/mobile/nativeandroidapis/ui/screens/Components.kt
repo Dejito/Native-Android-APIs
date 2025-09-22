@@ -1,7 +1,10 @@
 package com.mobile.nativeandroidapis.ui.screens
 
 import android.content.Context
+import android.os.Build.VERSION.SDK_INT
 import android.widget.Toast
+import androidx.annotation.DrawableRes
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -17,11 +20,17 @@ import androidx.compose.material3.TopAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.ImageLoader
+import coil.compose.rememberAsyncImagePainter
+import coil.decode.GifDecoder
+import coil.decode.ImageDecoderDecoder
+import coil.request.ImageRequest
 
 fun Context.displayToastMessage(message: String) {
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
@@ -100,4 +109,30 @@ fun TitleText(
             overflow = overflow
         )
     }
+}
+
+@Composable
+fun GIFImage(
+    @DrawableRes gifImage: Int,
+    modifier: Modifier = Modifier,
+) {
+    val context = LocalContext.current
+    val imageLoader = ImageLoader.Builder(context)
+        .components {
+            if (SDK_INT >= 28) {
+                add(ImageDecoderDecoder.Factory())
+            } else {
+                add(GifDecoder.Factory())
+            }
+        }
+        .build()
+    Image(
+        painter = rememberAsyncImagePainter(
+            ImageRequest.Builder(context).data(data = gifImage).apply(block = {
+//                size(Size.)
+            }).build(), imageLoader = imageLoader
+        ),
+        contentDescription = null,
+        modifier = modifier.fillMaxWidth(),
+    )
 }

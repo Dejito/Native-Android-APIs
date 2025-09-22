@@ -22,6 +22,9 @@ import com.mobile.nativeandroidapis.router.Navigator
 import com.mobile.nativeandroidapis.ui.screens.CustomAppBar
 import com.mobile.nativeandroidapis.ui.screens.TitleText
 import java.util.regex.Pattern
+import com.mobile.nativeandroidapis.R
+import com.mobile.nativeandroidapis.ui.screens.GIFImage
+
 
 @Composable
 fun QRCodeScannerScreen(navigator: Navigator, ) {
@@ -96,8 +99,7 @@ fun QRCodeScannerScreen(navigator: Navigator, ) {
             Text(
                 text = buildAnnotatedString {
                     append("Powered by ")
-                    withStyle(style = SpanStyle(fontWeight = FontWeight.W500, color = Color(
-                        kegowGreen), fontSize = 14.sp
+                    withStyle(style = SpanStyle(fontWeight = FontWeight.W500, color = Color.Green, fontSize = 14.sp
                     )) {
                         append("Runteller ")
                     }
