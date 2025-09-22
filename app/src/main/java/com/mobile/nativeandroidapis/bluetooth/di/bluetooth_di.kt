@@ -7,13 +7,6 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
-//val bluetoothModule = module {
-//    single { AndroidBluetoothController(
-//        context = androidContext()
-//    ) }
-//    single { BluetoothViewModel(get()) }
-//}
-
 val bluetoothModule = module {
     single<BluetoothController> { AndroidBluetoothController(androidContext()) }
     viewModel { BluetoothViewModel(get()) }
