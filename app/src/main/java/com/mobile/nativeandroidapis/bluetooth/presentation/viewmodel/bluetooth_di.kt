@@ -8,6 +8,6 @@ import org.koin.dsl.module
 
 val bluetoothModule = module {
     single<BluetoothController> { AndroidBluetoothController(androidContext()) }
-    viewModel { BluetoothViewModel(get()) }
+    single { BluetoothViewModel(get()) }
 }
 

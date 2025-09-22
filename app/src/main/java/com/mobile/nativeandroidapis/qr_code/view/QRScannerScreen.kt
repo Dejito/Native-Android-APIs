@@ -38,17 +38,15 @@ fun QRCodeScannerScreen(
 ) {
     var statusText by remember { mutableStateOf("") }
 
+    var hasPermission by remember { mutableStateOf(false) }
+
     val context = LocalContext.current
 
     PermissionRequestDialog(
         permission = Manifest.permission.CAMERA,
-        onResult = { isGranted ->
-            statusText = if (isGranted) {
-                "Scan QR code now!"
-            } else {
-                "No camera permission!"
-            }
-        },
+        onResult = { granted ->
+            hasPermission = granted
+        }
     )
     Scaffold(
         topBar = {
@@ -58,6 +56,7 @@ fun QRCodeScannerScreen(
             )
         },
     ) { paddingValues ->
+        if (hasPermission)
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -114,6 +113,15 @@ fun QRCodeScannerScreen(
                 color = Color.White, fontWeight = FontWeight.W500, fontSize = 12.sp,
                 lineHeight = 2.sp
             )
+        } else {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues),
+                contentAlignment = Alignment.Center
+            ) {
+                TitleText("Camera permission required to scan QR code")
+            }
         }
     }
 

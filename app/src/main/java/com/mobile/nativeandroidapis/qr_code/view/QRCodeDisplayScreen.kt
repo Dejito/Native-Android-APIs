@@ -67,7 +67,7 @@ fun QRCodeScreen(navigator: Navigator, qrCodeViewModel: QRCodeViewModel = koinVi
                             .padding(vertical = 6.dp, horizontal = 12.dp)
                             .background(Color.White, RoundedCornerShape(4))
                     ) {
-                        val encryptedQRData = "Oladeji Muhammed Runteller Assessment"
+                        val encryptedQRData = "Welcome to Oladeji Muhammed's \nRunteller Assessment"
                         QrCodeView(
                             data = encryptedQRData,
                             modifier = Modifier
