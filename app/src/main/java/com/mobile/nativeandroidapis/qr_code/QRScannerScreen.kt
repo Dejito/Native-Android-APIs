@@ -1,5 +1,6 @@
 package com.mobile.nativeandroidapis.qr_code
 
+import CameraPreview
 import android.Manifest
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
