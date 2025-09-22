@@ -28,7 +28,7 @@ import org.koin.androidx.compose.koinViewModel
 fun ChatScreen(
     bluetoothViewModel: BluetoothViewModel = koinViewModel()
 ) {
-    val vm = bluetoothViewModel.devices.collectAsState().value
+    val vm = bluetoothViewModel.deviceState.collectAsState().value
     val message = rememberSaveable { mutableStateOf("") }
     val keyboardController = LocalSoftwareKeyboardController.current
 

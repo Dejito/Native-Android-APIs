@@ -26,7 +26,7 @@ fun AppNavigator() {
             AppHomepage(navigation)
         }
         composable(Routes.Bluetooth.route) {
-            BluetoothHomeScreen(onNavUp = {navigation.navigateBack()})
+            BluetoothHomeScreen( navigation)
         }
         composable(Routes.QRCodeScanner.route) {
             QRCodeScannerScreen(navigation)

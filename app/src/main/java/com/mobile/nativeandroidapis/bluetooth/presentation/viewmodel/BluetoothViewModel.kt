@@ -22,35 +22,43 @@ class BluetoothViewModel (
     private val bluetoothController: BluetoothController
 ): ViewModel() {
 
-    private val _devices = MutableStateFlow(BluetoothUiState())
-    val devices = combine(
+    private val _deviceState = MutableStateFlow(BluetoothUiState())
+    val deviceState = combine(
         bluetoothController.scannedDevices,
         bluetoothController.pairedDevices,
-        _devices
+        _deviceState
     ) { scannedDevices, pairedDevices, state ->
         state.copy(
             scannedDevices = scannedDevices,
             pairedDevices = pairedDevices,
             messages = if(state.isConnected) state.messages else emptyList()
         )
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), _devices.value)
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), _deviceState.value)
+
+    fun setUiDefaultState(){
+        _deviceState.update {
+            it.copy(
+                isDefault = true
+            )
+        }
+    }
 
     private var deviceConnectionJob: Job? = null
 
     init {
         bluetoothController.isConnected.onEach { isConnected ->
-            _devices.update { it.copy(isConnected = isConnected) }
+            _deviceState.update { it.copy(isConnected = isConnected) }
         }.launchIn(viewModelScope)
 
         bluetoothController.errors.onEach { error ->
-            _devices.update { it.copy(
+            _deviceState.update { it.copy(
                 errorMessage = error
             ) }
         }.launchIn(viewModelScope)
     }
 
     fun connectToDevice(device: BluetoothDeviceDomain) {
-        _devices.update { it.copy(isConnecting = true) }
+        _deviceState.update { it.copy(isConnecting = true) }
         deviceConnectionJob = bluetoothController
             .connectToDevice(device)
             .listen()
@@ -59,14 +67,14 @@ class BluetoothViewModel (
     fun disconnectFromDevice() {
         deviceConnectionJob?.cancel()
         bluetoothController.closeConnection()
-        _devices.update { it.copy(
+        _deviceState.update { it.copy(
             isConnecting = false,
             isConnected = false
         ) }
     }
 
     fun waitForIncomingConnections() {
-        _devices.update { it.copy(isConnecting = true) }
+        _deviceState.update { it.copy(isConnecting = true) }
         deviceConnectionJob = bluetoothController
             .startBluetoothServer()
             .listen()
@@ -76,7 +84,7 @@ class BluetoothViewModel (
         viewModelScope.launch {
             val bluetoothMessage = bluetoothController.trySendMessage(message)
             if(bluetoothMessage != null) {
-                _devices.update { it.copy(
+                _deviceState.update { it.copy(
                     messages = it.messages + bluetoothMessage
                 ) }
             }
@@ -95,19 +103,19 @@ class BluetoothViewModel (
         return onEach { result ->
             when(result) {
                 ConnectionResult.ConnectionEstablished -> {
-                    _devices.update { it.copy(
+                    _deviceState.update { it.copy(
                         isConnected = true,
                         isConnecting = false,
                         errorMessage = null
                     ) }
                 }
                 is ConnectionResult.TransferSucceeded -> {
-                    _devices.update { it.copy(
+                    _deviceState.update { it.copy(
                         messages = it.messages + result.message
                     ) }
                 }
                 is ConnectionResult.Error -> {
-                    _devices.update { it.copy(
+                    _deviceState.update { it.copy(
                         isConnected = false,
                         isConnecting = false,
                         errorMessage = result.message
@@ -117,7 +125,7 @@ class BluetoothViewModel (
         }
             .catch { throwable ->
                 bluetoothController.closeConnection()
-                _devices.update { it.copy(
+                _deviceState.update { it.copy(
                     isConnected = false,
                     isConnecting = false,
                 ) }

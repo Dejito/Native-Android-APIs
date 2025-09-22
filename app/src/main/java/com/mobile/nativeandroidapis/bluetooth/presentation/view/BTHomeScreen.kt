@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mobile.nativeandroidapis.bluetooth.domain.BluetoothDeviceDomain
 import com.mobile.nativeandroidapis.bluetooth.presentation.viewmodel.BluetoothViewModel
+import com.mobile.nativeandroidapis.router.Navigator
 import com.mobile.nativeandroidapis.ui.screens.CustomAppBar
 import com.mobile.nativeandroidapis.ui.screens.displayToastMessage
 import org.koin.androidx.compose.koinViewModel
@@ -34,11 +35,11 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun BluetoothHomeScreen(
-    onNavUp: () -> Unit,
+    navigator: Navigator,
     bluetoothViewModel: BluetoothViewModel = koinViewModel()
 ) {
 
-    val device = bluetoothViewModel.devices.collectAsState().value
+    val device = bluetoothViewModel.deviceState.collectAsState().value
 
     when {
         device.isConnecting -> {
@@ -54,9 +55,20 @@ fun BluetoothHomeScreen(
         device.isConnected -> {
             ChatScreen()
         }
+        device.isDefault -> {
+            DeviceScreen(
+                onNavUp = {
+                    navigator.navigateBack()
+                    bluetoothViewModel.setUiDefaultState()
+                }
+            )
+        }
         else -> {
             DeviceScreen(
-                onNavUp = onNavUp
+                onNavUp = {
+                    navigator.navigateBack()
+                    bluetoothViewModel.setUiDefaultState()
+                }
             )
         }
     }
@@ -68,7 +80,7 @@ fun DeviceScreen(
     bluetoothViewModel: BluetoothViewModel = koinViewModel()
 ) {
 
-    val devices = bluetoothViewModel.devices.collectAsState().value
+    val devices = bluetoothViewModel.deviceState.collectAsState().value
 
     val context = LocalContext.current
     val bluetoothManager = remember {
