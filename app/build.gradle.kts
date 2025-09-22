@@ -65,7 +65,8 @@ dependencies {
     //qr code and camera libraries
     implementation(libs.zxing.core)
     implementation(libs.lightspark.compose.qr.code)
-
+    implementation(libs.coil.compose)
+    implementation(libs.coil.gif)
 
     // Use the same version for CameraX and CameraX extensions
     implementation(libs.camera.core)

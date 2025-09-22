@@ -5,52 +5,41 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.mobile.petra.router.Navigator
-import com.mobile.petra.router.Routes
+import com.mobile.nativeandroidapis.bluetooth.presentation.view.BluetoothHomeScreen
+import com.mobile.nativeandroidapis.qr_code.view.DisplayScannedQRScreen
+import com.mobile.nativeandroidapis.qr_code.view.QRCodeScannerScreen
+import com.mobile.nativeandroidapis.qr_code.view.QRCodeScreen
+import com.mobile.nativeandroidapis.qr_code.view.SelectQRCodeOption
+import com.mobile.nativeandroidapis.ui.screens.AppHomepage
 
 
 @SuppressLint("NewApi")
 @Composable
-fun AppNavigators() {
-//    val appInBackground = kegowViewModel.isAppInBackground.collectAsState().value
+fun AppNavigator() {
+
     val navController = rememberNavController()
     val navigation = Navigator(navController)
-
 
     NavHost(navController, startDestination = Routes.Home.route) {
 
         composable(Routes.Home.route) {
-//            LoginScreen(navigation)
+            AppHomepage(navigation)
+        }
+        composable(Routes.Bluetooth.route) {
+            BluetoothHomeScreen(onNavUp = {navigation.navigateBack()})
+        }
+        composable(Routes.QRCodeScanner.route) {
+            QRCodeScannerScreen(navigation)
+        }
+        composable(Routes.QRCodeView.route) {
+            QRCodeScreen(navigation)
+        }
+        composable(Routes.QRCodeOptionScreen.route) {
+            SelectQRCodeOption(navigation)
+        }
+        composable(Routes.DisplayScannedQRScreen.route) {
+            DisplayScannedQRScreen(navigation)
         }
 
     }
 }
-
-
-//@Composable
-//fun DashboardWithDelay(
-//    navigation: Navigator,
-//    kegowViewModel: KegowViewModel,
-//
-//    ) {
-//    val context = LocalContext.current
-//    val sharedPreferencesManager = AndroidSharedPreferencesManager(context)
-//    val navigateToOnboarding = remember { mutableStateOf(false) }
-//    val hideOnboardingScreens = sharedPreferencesManager.getBoolean("hide_onboarding_screen")
-//    LaunchedEffect(Unit) {
-//        delay(4000)
-//        navigateToOnboarding.value = true
-//    }
-//
-//    if (navigateToOnboarding.value) {
-//        if (!hideOnboardingScreens)
-//            SwipeScreen(navigator = navigation)
-//        else
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-//                Login(navigator = navigation, kegowViewModel = kegowViewModel)
-//            }
-//    } else {
-//        LauncherScreen()
-//    }
-//
-//}
