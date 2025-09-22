@@ -25,12 +25,17 @@ import com.mobile.nativeandroidapis.ui.screens.CustomAppBar
 import com.mobile.nativeandroidapis.ui.screens.TitleText
 import java.util.regex.Pattern
 import com.mobile.nativeandroidapis.R
+import com.mobile.nativeandroidapis.qr_code.viewmodel.QRCodeViewModel
 import com.mobile.nativeandroidapis.ui.screens.GIFImage
 import com.mobile.nativeandroidapis.ui.screens.displayToastMessage
+import org.koin.androidx.compose.koinViewModel
 
 
 @Composable
-fun QRCodeScannerScreen(navigator: Navigator ) {
+fun QRCodeScannerScreen(
+    navigator: Navigator, qrCodeViewModel: QRCodeViewModel
+    = koinViewModel()
+) {
     var statusText by remember { mutableStateOf("") }
 
     val context = LocalContext.current
@@ -47,51 +52,45 @@ fun QRCodeScannerScreen(navigator: Navigator ) {
     )
     Scaffold(
         topBar = {
-            CustomAppBar(title = "Scan QR Code", textColor = Color.Black, backgroundColor = Color.White,
-                onClick = {navigator.navigateBack()}, tint = Color.Black
+            CustomAppBar(
+                title = "Scan QR Code", textColor = Color.Black, backgroundColor = Color.White,
+                onClick = { navigator.navigateBack() }, tint = Color.Black
             )
         },
-    ) {
-            paddingValues ->
+    ) { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .paint(painter = painterResource(id = R.drawable.runteller), alpha = 1f,)
+                .paint(painter = painterResource(id = R.drawable.runteller), alpha = 1f)
                 .padding(horizontal = 10.dp)
                 .padding(paddingValues)
                 .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            TitleText(text = "Hold your camera over a QR Code to scan",
+            TitleText(
+                text = "Hold your camera over a QR Code to scan",
                 color = Color.Black, fontSize = 13, fontWeight = FontWeight.W500,
             )
-            TitleText(text = "Hold your camera over a QR Code to scan \n" + "QR Code to scan",
+            TitleText(
+                text = "Hold your camera over a QR Code to scan \n" + "QR Code to scan",
                 color = Color.White, fontSize = 13, fontWeight = FontWeight.W500,
             )
-            Box{
+            Box {
                 CameraPreview(
                     modifier = Modifier,
-                    accountDetails = { details ->
+                    encryptedDetail = { details ->
                         try {
-                            if (
-                                Pattern.matches(".*30000.*", details) || Pattern.matches(".*101000.*", details)
-                            ) {
-//                                kegowViewModel.setQrCodeData(details)
-//                                navigator.navToQRCodeTransfer()
-                            } else {
-                                navigator.navigateBack()
-                                context.displayToastMessage("Invalid QR Code. Kindly scan a Runteller QR Code")
-                            }
+                            qrCodeViewModel.setQrCodeData(details)
                         } catch (e: Exception) {
-//                            navigator.navToKegowApp()
-                        } finally {
-//                            navigator.navToKegowApp()
+                            e.printStackTrace()
+                            context.displayToastMessage(e.toString())
+                            navigator.navigateBack()
                         }
                     },
                     onFailed = {
-//                        context.displayToastMessage("Please scan a valid Kegow QR Code")
-//                        navigator.navToKegowApp()
+                        context.displayToastMessage("Something went wrong!")
+                        navigator.navigateBack()
                     },
                     navigator = navigator
                 )
@@ -102,8 +101,11 @@ fun QRCodeScannerScreen(navigator: Navigator ) {
             Text(
                 text = buildAnnotatedString {
                     append("Powered by ")
-                    withStyle(style = SpanStyle(fontWeight = FontWeight.W500, color = Color.Green, fontSize = 14.sp
-                    )) {
+                    withStyle(
+                        style = SpanStyle(
+                            fontWeight = FontWeight.W500, color = Color.Green, fontSize = 14.sp
+                        )
+                    ) {
                         append("Runteller ")
                     }
                     append("with \u2764")

@@ -16,7 +16,7 @@ import com.mobile.nativeandroidapis.router.Navigator
 @Composable
 fun CameraPreview(
     modifier: Modifier,
-    accountDetails: (String) -> Unit, onFailed: () -> Unit,
+    encryptedDetail: (String) -> Unit, onFailed: () -> Unit,
     navigator: Navigator
 ) {
 
@@ -37,7 +37,7 @@ fun CameraPreview(
                     ContextCompat.getMainExecutor(context),
                     QRCodeAnalyzer(
                         urlCallback = { url ->
-                            accountDetails(url)
+                            encryptedDetail(url)
                         },
                         onFailed = {
 //                            navigator.goBack()
