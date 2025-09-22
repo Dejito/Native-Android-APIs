@@ -26,10 +26,8 @@ fun SelectQRCodeOption(navigator: Navigator) {
                 .padding(16.dp)
                 .fillMaxSize()
         ) {
-            AppHomePageCard(title = "Bluetooth", onClick = { navigator.navToBluetooth() })
-            AppHomePageCard(title = "QRCode", onClick = { navigator.navToQRCodeScanner() })
-            AppHomePageCard(title = "SQLite Cypher", onClick = {})
-            AppHomePageCard(title = "NFC", onClick = {})
+            AppHomePageCard(title = "Scan QR Code", onClick = { navigator.navToQRCodeScanner() })
+            AppHomePageCard(title = "Generate QR Code", onClick = { navigator.navToQRCodeScreen() })
         }
     }
 }
