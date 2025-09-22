@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mobile.nativeandroidapis.router.Navigator
 import com.mobile.nativeandroidapis.ui.screens.CustomAppBar
+import com.mobile.nativeandroidapis.ui.screens.TitleText
 import java.util.regex.Pattern
 
 @Composable
