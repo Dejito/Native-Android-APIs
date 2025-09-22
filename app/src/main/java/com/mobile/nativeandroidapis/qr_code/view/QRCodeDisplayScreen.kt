@@ -67,8 +67,7 @@ fun QRCodeScreen(navigator: Navigator, qrCodeViewModel: QRCodeViewModel = koinVi
                             .padding(vertical = 6.dp, horizontal = 12.dp)
                             .background(Color.White, RoundedCornerShape(4))
                     ) {
-                        val encryptedQRData =
-                            ""
+                        val encryptedQRData = "Oladeji Muhammed"
                         QrCodeView(
                             data = encryptedQRData,
                             modifier = Modifier
@@ -88,7 +87,7 @@ fun QRCodeScreen(navigator: Navigator, qrCodeViewModel: QRCodeViewModel = koinVi
                                     Image(
                                         painter = painterResource(id = R.drawable.runteller),
                                         contentScale = ContentScale.Fit,
-                                        contentDescription = "Kegow logo",
+                                        contentDescription = "runteller logo",
                                         modifier = Modifier
                                             .size(150.dp)
                                             .padding(3.dp)
