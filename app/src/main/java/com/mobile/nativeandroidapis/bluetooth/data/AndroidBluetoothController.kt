@@ -15,7 +15,7 @@ import com.mobile.nativeandroidapis.bluetooth.domain.BluetoothDeviceDomain
 import com.mobile.nativeandroidapis.bluetooth.domain.BluetoothMessage
 import com.mobile.nativeandroidapis.bluetooth.domain.ConnectionResult
 import com.mobile.nativeandroidapis.bluetooth.data.remote.BluetoothStateReceiver
-import com.plcoding.bluetoothchat.data.chat.FoundDeviceReceiver
+import com.mobile.nativeandroidapis.bluetooth.data.remote.FoundDeviceReceiver
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow

@@ -1,9 +1,7 @@
-package com.mobile.nativeandroidapis.application
+package com.mobile.nativeandroidapis.di
 
 import android.app.Application
-import com.mobile.nativeandroidapis.di.initKoin
 import org.koin.android.ext.koin.androidContext
-
 
 class NativeAndroidAPIs : Application() {
     override fun onCreate() {
