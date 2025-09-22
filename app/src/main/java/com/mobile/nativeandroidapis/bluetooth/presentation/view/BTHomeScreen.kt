@@ -7,6 +7,7 @@ import android.content.Intent
 import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -31,6 +32,7 @@ import com.mobile.nativeandroidapis.router.Navigator
 import com.mobile.nativeandroidapis.ui.screens.CustomAppBar
 import com.mobile.nativeandroidapis.ui.screens.displayToastMessage
 import org.koin.androidx.compose.koinViewModel
+import androidx.compose.ui.graphics.Color
 
 
 @Composable
@@ -41,13 +43,24 @@ fun BluetoothHomeScreen(
 
     val device = bluetoothViewModel.deviceState.collectAsState().value
 
+    DeviceScreen(
+        onNavUp = {
+            bluetoothViewModel.setUiDefaultState()
+            bluetoothViewModel.disconnectFromDevice()
+            navigator.navigateBack()
+        }
+    )
+
     when {
+
         device.isConnecting -> {
             Column(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .background(color = Color.Transparent)
+                    .fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
-            ) {
+            )  {
                 CircularProgressIndicator()
                 Text(text = "Connecting...")
             }
@@ -58,8 +71,9 @@ fun BluetoothHomeScreen(
         device.isDefault -> {
             DeviceScreen(
                 onNavUp = {
-                    navigator.navigateBack()
                     bluetoothViewModel.setUiDefaultState()
+                    bluetoothViewModel.disconnectFromDevice()
+                    navigator.navigateBack()
                 }
             )
         }
@@ -73,6 +87,7 @@ fun BluetoothHomeScreen(
         }
     }
 }
+
 
 @Composable
 fun DeviceScreen(
@@ -91,12 +106,10 @@ fun DeviceScreen(
     }
     val isBluetoothEnabled = bluetoothAdapter?.isEnabled == true
 
-    // Launcher to enable Bluetooth
     val enableBluetoothLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult()
     ) { /* no result needed */ }
 
-    // Launcher for permissions
     val permissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestMultiplePermissions()
     ) { perms ->
@@ -112,7 +125,6 @@ fun DeviceScreen(
         }
     }
 
-    // Request permissions once
     LaunchedEffect(Unit) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             permissionLauncher.launch(
@@ -157,12 +169,12 @@ fun DeviceScreen(
                     Button(onClick = {
                         bluetoothViewModel.startScan()
                     }) {
-                        Text(text = "Start scan")
+                        Text(text = "Start Search")
                     }
                     Button(onClick = {
                         bluetoothViewModel.stopScan()
                     }) {
-                        Text(text = "Stop scan")
+                        Text(text = "Stop Search")
                     }
                     Button(onClick = { bluetoothViewModel.waitForIncomingConnections() }) {
                         Text(text = "Enable Visibility")
