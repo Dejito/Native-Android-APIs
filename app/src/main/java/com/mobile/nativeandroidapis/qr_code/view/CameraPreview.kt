@@ -26,7 +26,9 @@ fun CameraPreview(
         factory = { context ->
             val previewView = PreviewView(context)
             val preview = Preview.Builder().build()
-            val cameraSelector = CameraSelector.Builder().build()
+            val cameraSelector = CameraSelector.Builder()
+                .requireLensFacing(CameraSelector.LENS_FACING_BACK)
+                .build()
 
             preview.setSurfaceProvider(previewView.surfaceProvider)
 
@@ -40,7 +42,6 @@ fun CameraPreview(
                             encryptedDetail(url)
                         },
                         onFailed = {
-//                            navigator.goBack()
                             onFailed()
                         },
                         onFailedMessage = {}

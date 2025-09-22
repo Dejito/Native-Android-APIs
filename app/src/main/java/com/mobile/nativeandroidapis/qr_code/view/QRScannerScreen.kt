@@ -82,6 +82,7 @@ fun QRCodeScannerScreen(
                     encryptedDetail = { details ->
                         try {
                             qrCodeViewModel.setQrCodeData(details)
+                            navigator.navToDisplayScannedQRScreen()
                         } catch (e: Exception) {
                             e.printStackTrace()
                             context.displayToastMessage(e.toString())
@@ -115,5 +116,6 @@ fun QRCodeScannerScreen(
             )
         }
     }
+
 }
 

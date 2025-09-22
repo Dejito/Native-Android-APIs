@@ -38,7 +38,6 @@ class QRCodeAnalyzer(
             onFailedMessage("failed because of ${e.message.toString()}")
         }
         finally {
-            onFailed()
             multiFormatReader.reset()  // Reset reader to clear any internal state
             image.close()
         }
