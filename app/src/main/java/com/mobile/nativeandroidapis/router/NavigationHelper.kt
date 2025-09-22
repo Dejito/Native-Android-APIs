@@ -18,6 +18,10 @@ class Navigator(private val navController: NavHostController) {
         navController.navigate(Routes.QRCodeView.route)
     }
 
+    fun navToQROptionScreen(){
+        navController.navigate(Routes.QRCodeOptionScreen.route)
+    }
+
     fun navigateBack() {
         navController.navigateUp()
     }

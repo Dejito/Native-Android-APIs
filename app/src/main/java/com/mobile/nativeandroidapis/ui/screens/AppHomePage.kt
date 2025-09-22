@@ -42,7 +42,7 @@ fun AppHomepage(navigator: Navigator) {
                 .fillMaxSize()
         ) {
             AppHomePageCard(title = "Bluetooth", onClick = {navigator.navToBluetooth()})
-            AppHomePageCard(title = "QRCode", onClick = {navigator.navToQRCodeScanner()})
+            AppHomePageCard(title = "QRCode", onClick = {navigator.navToQROptionScreen()})
             AppHomePageCard(title = "SQLite Cypher", onClick = {})
             AppHomePageCard(title = "NFC", onClick = {})
         }
