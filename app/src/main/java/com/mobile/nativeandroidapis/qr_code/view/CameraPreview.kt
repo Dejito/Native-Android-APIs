@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.LocalLifecycleOwner
-import com.mobile.nativeandroidapis.qr_code.QRCodeAnalyzer
+import com.mobile.nativeandroidapis.qr_code.view.QRCodeAnalyzer
 import com.mobile.nativeandroidapis.router.Navigator
 
 @Composable

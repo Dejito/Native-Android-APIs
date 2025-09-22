@@ -1,4 +1,4 @@
-package com.mobile.nativeandroidapis.qr_code
+package com.mobile.nativeandroidapis.qr_code.view
 
 import CameraPreview
 import android.Manifest

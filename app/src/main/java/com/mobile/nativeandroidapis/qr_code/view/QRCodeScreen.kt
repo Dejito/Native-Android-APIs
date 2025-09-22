@@ -1,4 +1,4 @@
-package com.mobile.nativeandroidapis.qr_code
+package com.mobile.nativeandroidapis.qr_code.view
 
 import android.annotation.SuppressLint
 import android.os.Build
@@ -24,13 +24,14 @@ import com.lightspark.composeqr.QrCodeView
 import com.mobile.nativeandroidapis.router.Navigator
 import com.mobile.nativeandroidapis.ui.screens.CustomAppBar
 import com.mobile.nativeandroidapis.R
+import com.mobile.nativeandroidapis.qr_code.viewmodel.QRCodeViewModel
 import com.mobile.nativeandroidapis.ui.screens.TitleText
+import org.koin.androidx.compose.koinViewModel
 
 @SuppressLint("StateFlowValueCalledInComposition")
 @RequiresApi(Build.VERSION_CODES.Q)
 @Composable
-fun QRCodeScreen(navigator: Navigator,) {
-
+fun QRCodeScreen(navigator: Navigator, qrCodeViewModel: QRCodeViewModel = koinViewModel()) {
 
     Scaffold(
         topBar = {

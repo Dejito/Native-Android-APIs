@@ -1,4 +1,4 @@
-package com.mobile.nativeandroidapis.qr_code
+package com.mobile.nativeandroidapis.qr_code.view
 
 import android.content.Context
 import android.content.pm.PackageManager
