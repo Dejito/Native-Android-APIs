@@ -15,6 +15,8 @@ camera-core = "1.3.4"
 camera-view = "1.3.4"
 lightspark-compose-qr-code = "1.0.1"
 navigationCompose = "2.8.6"
+coil-gif = "2.7.0"
+coil-compose = "2.7.0"
 
 
 [libraries]
@@ -46,7 +48,8 @@ lightspark-compose-qr-code = { module = "com.lightspark:compose-qr-code", versio
 navigation-fragment = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigationCompose" }
 navigation-ui = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigationCompose" }
 navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
-
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil-compose" }
+coil-gif = { module = "io.coil-kt:coil-gif", version.ref = "coil-gif" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
