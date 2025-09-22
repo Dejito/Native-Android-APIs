@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
-import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -28,7 +27,7 @@ fun Context.displayToastMessage(message: String) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PetraAppBar(
+fun CustomAppBar(
     enabledBackButton: Boolean = true,
     title: String,
     backgroundColor: Color = Color.Transparent,

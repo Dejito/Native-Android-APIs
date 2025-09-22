@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mobile.nativeandroidapis.bluetooth.domain.BluetoothDeviceDomain
 import com.mobile.nativeandroidapis.bluetooth.presentation.viewmodel.BluetoothViewModel
-import com.mobile.nativeandroidapis.ui.screens.PetraAppBar
+import com.mobile.nativeandroidapis.ui.screens.CustomAppBar
 import com.mobile.nativeandroidapis.ui.screens.displayToastMessage
 import org.koin.androidx.compose.koinViewModel
 
@@ -121,7 +121,7 @@ fun DeviceScreen(
 
 
     Scaffold(
-        topBar = { PetraAppBar(title = "Homepage", onClick = onNavUp) },
+        topBar = { CustomAppBar(title = "Homepage", onClick = onNavUp) },
         content = { paddingValues ->
             Column(
                 modifier = Modifier
