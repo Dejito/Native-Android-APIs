@@ -8,7 +8,6 @@ class NativeAndroidAPIs : Application() {
         super.onCreate()
         initKoin {
             androidContext(this@NativeAndroidAPIs)
-//            AndroidLogger(Level.ALL)
         }
     }
 }

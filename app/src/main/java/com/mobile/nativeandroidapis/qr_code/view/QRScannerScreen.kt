@@ -30,7 +30,7 @@ import com.mobile.nativeandroidapis.ui.screens.displayToastMessage
 
 
 @Composable
-fun QRCodeScannerScreen(navigator: Navigator, ) {
+fun QRCodeScannerScreen(navigator: Navigator ) {
     var statusText by remember { mutableStateOf("") }
 
     val context = LocalContext.current

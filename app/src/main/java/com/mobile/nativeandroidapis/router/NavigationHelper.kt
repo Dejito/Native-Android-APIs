@@ -10,6 +10,14 @@ class Navigator(private val navController: NavHostController) {
         navController.navigate(Routes.Bluetooth.route)
     }
 
+    fun navToQRCodeScanner(){
+        navController.navigate(Routes.QRCodeScanner.route)
+    }
+
+    fun navToQRCodeScreen(){
+        navController.navigate(Routes.QRCodeView.route)
+    }
+
     fun navigateBack() {
         navController.navigateUp()
     }
