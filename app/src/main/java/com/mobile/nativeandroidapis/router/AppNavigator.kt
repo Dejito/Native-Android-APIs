@@ -8,6 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import com.mobile.nativeandroidapis.bluetooth.presentation.view.BluetoothHomeScreen
 import com.mobile.nativeandroidapis.qr_code.view.QRCodeScannerScreen
 import com.mobile.nativeandroidapis.qr_code.view.QRCodeScreen
+import com.mobile.nativeandroidapis.qr_code.view.SelectQRCodeOption
 import com.mobile.nativeandroidapis.ui.screens.AppHomepage
 
 
@@ -31,6 +32,9 @@ fun AppNavigators() {
         }
         composable(Routes.QRCodeView.route) {
             QRCodeScreen(navigation)
+        }
+        composable(Routes.QRCodeOptionScreen.route) {
+            SelectQRCodeOption(navigation)
         }
 
     }
