@@ -36,7 +36,7 @@ fun QRCodeScreen(navigator: Navigator,) {
         topBar = {
                 CustomAppBar(
                     title = "My QR Code",
-                    onClick = { navigator.goBack() },
+                    onClick = { navigator.navigateBack() },
                 )
         },
     ) { paddingValues ->

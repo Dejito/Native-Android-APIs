@@ -10,7 +10,7 @@ class Navigator(private val navController: NavHostController) {
         navController.navigate(Routes.Bluetooth.route)
     }
 
-    fun goBack() {
+    fun navigateBack() {
         navController.navigateUp()
     }
 

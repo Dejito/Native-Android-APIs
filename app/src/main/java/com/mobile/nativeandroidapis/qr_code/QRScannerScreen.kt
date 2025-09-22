@@ -10,8 +10,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -24,6 +26,7 @@ import com.mobile.nativeandroidapis.ui.screens.TitleText
 import java.util.regex.Pattern
 import com.mobile.nativeandroidapis.R
 import com.mobile.nativeandroidapis.ui.screens.GIFImage
+import com.mobile.nativeandroidapis.ui.screens.displayToastMessage
 
 
 @Composable
@@ -45,7 +48,7 @@ fun QRCodeScannerScreen(navigator: Navigator, ) {
     Scaffold(
         topBar = {
             CustomAppBar(title = "Scan QR Code", textColor = Color.Black, backgroundColor = Color.White,
-                onClick = {navigator.goBack()}, tint = Color.Black
+                onClick = {navigator.navigateBack()}, tint = Color.Black
             )
         },
     ) {
@@ -53,8 +56,8 @@ fun QRCodeScannerScreen(navigator: Navigator, ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-//                .paint(painter = painterResource(id = R.drawable.kegow_logo), alpha = 1f,)
-//                .padding(horizontal = 10.dp)
+                .paint(painter = painterResource(id = R.drawable.runteller), alpha = 1f,)
+                .padding(horizontal = 10.dp)
                 .padding(paddingValues)
                 .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.Center,
@@ -74,11 +77,11 @@ fun QRCodeScannerScreen(navigator: Navigator, ) {
                             if (
                                 Pattern.matches(".*30000.*", details) || Pattern.matches(".*101000.*", details)
                             ) {
-                                kegowViewModel.setQrCodeData(details)
-                                navigator.navToQRCodeTransfer()
+//                                kegowViewModel.setQrCodeData(details)
+//                                navigator.navToQRCodeTransfer()
                             } else {
-                                navigator.navToKegowApp()
-                                context.displayToastMessage("Invalid QR Code. Kindly scan a Kegow QR Code")
+                                navigator.navigateBack()
+                                context.displayToastMessage("Invalid QR Code. Kindly scan a Runteller QR Code")
                             }
                         } catch (e: Exception) {
 //                            navigator.navToKegowApp()

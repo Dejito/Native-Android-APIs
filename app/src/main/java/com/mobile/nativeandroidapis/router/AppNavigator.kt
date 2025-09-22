@@ -22,7 +22,7 @@ fun AppNavigators() {
             AppHomepage(navigation)
         }
         composable(Routes.Bluetooth.route) {
-            BluetoothHomeScreen(onNavUp = {navigation.goBack()})
+            BluetoothHomeScreen(onNavUp = {navigation.navigateBack()})
         }
 
     }

@@ -47,7 +47,7 @@ fun CameraPreview(
                     )
                 )
             } catch (e: Error) {
-                navigator.goBack()
+                navigator.navigateBack()
             }
 
             ProcessCameraProvider.getInstance(context).get().bindToLifecycle(
