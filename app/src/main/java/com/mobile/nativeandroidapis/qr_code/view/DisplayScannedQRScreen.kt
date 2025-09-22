@@ -25,6 +25,7 @@ fun DisplayScannedQRScreen(
     qrCodeViewModel: QRCodeViewModel = koinViewModel()
 ) {
     val decryptedQRCodeValue = qrCodeViewModel.qrCodeData.collectAsState().value
+
     Scaffold(
         topBar = {
             CustomAppBar(title = "Scanned QR Details", onClick = { navigator.navigateBack() }

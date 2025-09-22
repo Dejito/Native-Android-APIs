@@ -15,7 +15,7 @@ import com.mobile.nativeandroidapis.ui.screens.AppHomepage
 
 @SuppressLint("NewApi")
 @Composable
-fun AppNavigators() {
+fun AppNavigator() {
 
     val navController = rememberNavController()
     val navigation = Navigator(navController)

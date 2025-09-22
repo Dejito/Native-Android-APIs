@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -35,6 +36,8 @@ fun AppHomepage(navigator: Navigator) {
 
         DisabledBackPress()
 
+        val context = LocalContext.current
+
         Column(
             modifier = Modifier
                 .padding(paddingValues)
@@ -43,8 +46,12 @@ fun AppHomepage(navigator: Navigator) {
         ) {
             AppHomePageCard(title = "Bluetooth", onClick = {navigator.navToBluetooth()})
             AppHomePageCard(title = "QRCode", onClick = {navigator.navToQROptionScreen()})
-            AppHomePageCard(title = "SQLite Cypher", onClick = {})
-            AppHomePageCard(title = "NFC", onClick = {})
+            AppHomePageCard(title = "SQLite Cypher", onClick = {
+                context.displayToastMessage("Coming soon")
+            })
+            AppHomePageCard(title = "NFC", onClick = {
+                context.displayToastMessage("Coming soon")
+            })
         }
     }
 }

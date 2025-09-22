@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -14,16 +13,11 @@ import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.mobile.nativeandroidapis.router.Navigator
 import com.mobile.nativeandroidapis.ui.screens.CustomAppBar
 import com.mobile.nativeandroidapis.ui.screens.TitleText
-import java.util.regex.Pattern
 import com.mobile.nativeandroidapis.R
 import com.mobile.nativeandroidapis.qr_code.viewmodel.QRCodeViewModel
 import com.mobile.nativeandroidapis.ui.screens.GIFImage
@@ -36,7 +30,6 @@ fun QRCodeScannerScreen(
     navigator: Navigator, qrCodeViewModel: QRCodeViewModel
     = koinViewModel()
 ) {
-    var statusText by remember { mutableStateOf("") }
 
     var hasPermission by remember { mutableStateOf(false) }
 
@@ -98,21 +91,6 @@ fun QRCodeScannerScreen(
                 GIFImage(gifImage = R.drawable.scan, modifier = Modifier.size(400.dp))
             }
 
-            Text(
-                text = buildAnnotatedString {
-                    append("Powered by ")
-                    withStyle(
-                        style = SpanStyle(
-                            fontWeight = FontWeight.W500, color = Color.Green, fontSize = 14.sp
-                        )
-                    ) {
-                        append("Runteller ")
-                    }
-                    append("with \u2764")
-                },
-                color = Color.White, fontWeight = FontWeight.W500, fontSize = 12.sp,
-                lineHeight = 2.sp
-            )
         } else {
             Box(
                 modifier = Modifier
