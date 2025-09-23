@@ -10,6 +10,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
@@ -45,7 +46,7 @@ fun BluetoothHomeScreen(
 
     DeviceScreen(
         onNavUp = {
-            bluetoothViewModel.setUiDefaultState()
+            bluetoothViewModel.setDefaultUiState()
             bluetoothViewModel.disconnectFromDevice()
             navigator.navigateBack()
         }
@@ -71,7 +72,7 @@ fun BluetoothHomeScreen(
         device.isDefault -> {
             DeviceScreen(
                 onNavUp = {
-                    bluetoothViewModel.setUiDefaultState()
+                    bluetoothViewModel.setDefaultUiState()
                     bluetoothViewModel.disconnectFromDevice()
                     navigator.navigateBack()
                 }
@@ -81,7 +82,7 @@ fun BluetoothHomeScreen(
             DeviceScreen(
                 onNavUp = {
                     navigator.navigateBack()
-                    bluetoothViewModel.setUiDefaultState()
+                    bluetoothViewModel.setDefaultUiState()
                 }
             )
         }
@@ -176,10 +177,18 @@ fun DeviceScreen(
                     }) {
                         Text(text = "Stop Search")
                     }
-                    Button(onClick = { bluetoothViewModel.waitForIncomingConnections() }) {
-                        Text(text = "Enable Visibility")
-                    }
 
+
+
+                }
+                Row(modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center){
+                Button(
+                    onClick = { bluetoothViewModel.waitForIncomingConnections() },
+                    modifier = Modifier.padding(top = 12.dp)
+                ) {
+                    Text(text = "Enable Visibility")
+                }
                 }
             }
         }

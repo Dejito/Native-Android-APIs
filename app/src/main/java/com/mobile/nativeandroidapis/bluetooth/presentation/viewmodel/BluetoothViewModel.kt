@@ -35,7 +35,7 @@ class BluetoothViewModel (
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), _deviceState.value)
 
-    fun setUiDefaultState(){
+    fun setDefaultUiState(){
         _deviceState.update {
             it.copy(
                 isDefault = true

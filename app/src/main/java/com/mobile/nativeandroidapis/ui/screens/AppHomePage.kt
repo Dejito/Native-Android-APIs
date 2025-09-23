@@ -24,12 +24,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.mobile.nativeandroidapis.bluetooth.presentation.viewmodel.BluetoothViewModel
 import com.mobile.nativeandroidapis.utils.DisabledBackPress
 import com.mobile.nativeandroidapis.router.Navigator
+import org.koin.androidx.compose.koinViewModel
 
 
 @Composable
-fun AppHomepage(navigator: Navigator) {
+fun AppHomepage(navigator: Navigator, bluetoothViewModel: BluetoothViewModel = koinViewModel()) {
     Scaffold(
         topBar = { CustomAppBar(title = "Homepage", enabledBackButton = false) }
     ) { paddingValues ->
@@ -44,8 +46,13 @@ fun AppHomepage(navigator: Navigator) {
                 .padding(16.dp)
                 .fillMaxSize()
         ) {
-            AppHomePageCard(title = "Bluetooth", onClick = {navigator.navToBluetooth()})
-            AppHomePageCard(title = "QRCode", onClick = {navigator.navToQROptionScreen()})
+            AppHomePageCard(title = "Bluetooth",
+                onClick = {
+                    bluetoothViewModel.setDefaultUiState()
+                    navigator.navToBluetooth()
+                }
+            )
+            AppHomePageCard(title = "QRCode", onClick = { navigator.navToQROptionScreen() })
             AppHomePageCard(title = "SQLite Cypher", onClick = {
                 context.displayToastMessage("Coming soon")
             })
@@ -67,7 +74,8 @@ internal fun AppHomePageCard(
         colors = CardDefaults.cardColors(
             containerColor = Color.White
         ),
-        modifier = Modifier.padding(top = 24.dp)
+        modifier = Modifier
+            .padding(top = 24.dp)
             .clickable { onClick() }
     ) {
         Row(
