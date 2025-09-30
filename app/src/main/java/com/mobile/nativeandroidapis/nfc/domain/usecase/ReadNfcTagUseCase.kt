@@ -3,7 +3,6 @@ package com.mobile.nativeandroidapis.nfc.domain.usecase
 
 import android.nfc.NdefMessage
 import android.nfc.Tag
-import android.nfc.tech.Ndef
 import com.mobile.nativeandroidapis.nfc.domain.model.NfcTagData
 
 class ReadNfcTagUseCase {
