@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.mobile.nativeandroidapis.nfc.data.NfcManager
 import com.mobile.nativeandroidapis.nfc.presentation.view.NfcScreen
 import com.mobile.nativeandroidapis.nfc.presentation.viewmodel.NFCViewModel
+import com.mobile.nativeandroidapis.router.AppNavigator
 import com.mobile.nativeandroidapis.ui.theme.NativeAndroidAPIsTheme
 
 class MainActivity : ComponentActivity() {
@@ -26,7 +27,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             NativeAndroidAPIsTheme {
-                NfcScreen()
+                AppNavigator()
             }
         }
     }

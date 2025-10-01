@@ -53,10 +53,10 @@ fun AppHomepage(navigator: Navigator, bluetoothViewModel: BluetoothViewModel = k
                 }
             )
             AppHomePageCard(title = "QRCode", onClick = { navigator.navToQROptionScreen() })
-            AppHomePageCard(title = "SQLite Cypher", onClick = {
-                context.displayToastMessage("Coming soon")
-            })
             AppHomePageCard(title = "NFC", onClick = {
+                navigator.navToNFCScreen()
+            })
+            AppHomePageCard(title = "SQLite Cypher", onClick = {
                 context.displayToastMessage("Coming soon")
             })
         }
