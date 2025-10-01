@@ -38,7 +38,7 @@ import java.util.UUID
 
 
 @SuppressLint("MissingPermission")
-class BluetoothControllerImpl(
+class BluetoothControllerImplementation(
     private val context: Context
 ): BluetoothController {
 
