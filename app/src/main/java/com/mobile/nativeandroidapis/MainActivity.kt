@@ -12,17 +12,17 @@ import com.mobile.nativeandroidapis.ui.theme.NativeAndroidAPIsTheme
 
 class MainActivity : ComponentActivity() {
 
-    private lateinit var viewModel: NFCViewModel
+    private lateinit var nfcViewModel: NFCViewModel
     private lateinit var nfcManager: NfcManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel = ViewModelProvider(this)[NFCViewModel::class.java]
-        nfcManager = NfcManager(this, viewModel)
+        nfcViewModel = ViewModelProvider(this)[NFCViewModel::class.java]
+        nfcManager = NfcManager(this, nfcViewModel)
 
         val isNFCAvailable = packageManager.hasSystemFeature(android.content.pm.PackageManager.FEATURE_NFC)
-        viewModel.setNfcSupportedByDeviceCheck(isNFCAvailable)
+        nfcViewModel.setNfcSupportedByDeviceCheck(isNFCAvailable)
 
         setContent {
             NativeAndroidAPIsTheme {
