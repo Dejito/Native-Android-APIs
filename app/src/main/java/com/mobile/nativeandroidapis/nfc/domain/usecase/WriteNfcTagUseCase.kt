@@ -3,6 +3,7 @@ package com.mobile.nativeandroidapis.nfc.domain.usecase
 
 import android.nfc.NdefMessage
 import android.nfc.NdefRecord
+import android.nfc.NdefRecord.TNF_ABSOLUTE_URI
 import android.nfc.Tag
 import android.nfc.tech.Ndef
 import java.nio.charset.Charset
@@ -24,3 +25,12 @@ class WriteNfcTagUseCase {
         }
     }
 }
+
+//val uriRecord = ByteArray(0).let { emptyByteArray ->
+//    NdefRecord(
+//        TNF_ABSOLUTE_URI,
+//        "https://developer.android.com/index.html".toByteArray(Charset.forName("US-ASCII")),
+//        emptyByteArray,
+//        emptyByteArray
+//    )
+//}
