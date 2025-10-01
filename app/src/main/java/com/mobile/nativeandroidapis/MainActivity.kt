@@ -4,6 +4,7 @@ import android.app.ComponentCaller
 import android.app.PendingIntent
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.pm.PackageManager
 import android.nfc.NdefMessage
 import android.nfc.NfcAdapter
 import android.nfc.Tag
@@ -13,7 +14,6 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.mobile.nativeandroidapis.nfc.presentation.view.NfcScreen
 import com.mobile.nativeandroidapis.nfc.presentation.viewmodel.NFCViewModel
-import com.mobile.nativeandroidapis.router.AppNavigator
 import com.mobile.nativeandroidapis.ui.theme.NativeAndroidAPIsTheme
 import androidx.lifecycle.ViewModelProvider
 
@@ -26,7 +26,8 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         nfcViewModel = ViewModelProvider(this)[NFCViewModel::class.java]
-
+        val isNFCAvailable = packageManager.hasSystemFeature(PackageManager.FEATURE_NFC)
+        nfcViewModel.isNfcAvailable(isNFCAvailable)
 
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -56,6 +57,8 @@ class MainActivity : ComponentActivity() {
 
     override fun onResume() {
         super.onResume()
+        nfcViewModel.updateIsEnabled(nfcAdapter?.isEnabled == true)
+
         val pendingIntent = PendingIntent.getActivity(
             this, 0,
             Intent(this, javaClass).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP),
@@ -64,6 +67,7 @@ class MainActivity : ComponentActivity() {
         val filters = arrayOf(IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED))
         nfcAdapter?.enableForegroundDispatch(this, pendingIntent, filters, null)
     }
+
 
     override fun onPause() {
         super.onPause()

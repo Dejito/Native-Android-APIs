@@ -17,7 +17,7 @@ class NFCViewModel(
     private val _state = MutableStateFlow(NfcUiState())
     val state: StateFlow<NfcUiState> = _state
 
-    fun updateIsAvailable(value: Boolean) {
+    fun isNfcAvailable(value: Boolean) {
         _state.value = _state.value.copy(isAvailable = value)
     }
 
