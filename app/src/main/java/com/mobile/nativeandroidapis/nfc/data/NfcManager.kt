@@ -13,7 +13,7 @@ import com.mobile.nativeandroidapis.nfc.presentation.viewmodel.NFCViewModel
 class NfcManager(
     private val activity: Activity,
     private val viewModel: NFCViewModel
-) {
+  ) {
     private val nfcAdapter: NfcAdapter? = NfcAdapter.getDefaultAdapter(activity)
 
     private val pendingIntent = PendingIntent.getActivity(
@@ -33,7 +33,7 @@ class NfcManager(
             intentFilters,
             null
         )
-        viewModel.updateIsEnabled(nfcAdapter?.isEnabled == true)
+        viewModel.setNfcEnabledOnDeviceCheck(nfcAdapter?.isEnabled == true)
     }
 
     fun onPause() {
@@ -41,7 +41,8 @@ class NfcManager(
     }
 
     fun handleIntent(intent: Intent) {
-        if (intent.action == NfcAdapter.ACTION_TAG_DISCOVERED) {
+//        if (intent.action == NfcAdapter.ACTION_TAG_DISCOVERED) {
+        if (NfcAdapter.ACTION_NDEF_DISCOVERED == intent.action) {
             val tag: Tag? = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG)
             val rawMsgs = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES)
             val messages = rawMsgs?.map { it as NdefMessage }?.toTypedArray()

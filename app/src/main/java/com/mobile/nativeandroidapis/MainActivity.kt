@@ -6,7 +6,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.lifecycle.ViewModelProvider
 import com.mobile.nativeandroidapis.nfc.data.NfcManager
-import com.mobile.nativeandroidapis.nfc.presentation.view.NfcScreen
 import com.mobile.nativeandroidapis.nfc.presentation.viewmodel.NFCViewModel
 import com.mobile.nativeandroidapis.router.AppNavigator
 import com.mobile.nativeandroidapis.ui.theme.NativeAndroidAPIsTheme
@@ -23,7 +22,7 @@ class MainActivity : ComponentActivity() {
         nfcManager = NfcManager(this, viewModel)
 
         val isNFCAvailable = packageManager.hasSystemFeature(android.content.pm.PackageManager.FEATURE_NFC)
-        viewModel.isNfcAvailable(isNFCAvailable)
+        viewModel.setNfcSupportedByDeviceCheck(isNFCAvailable)
 
         setContent {
             NativeAndroidAPIsTheme {

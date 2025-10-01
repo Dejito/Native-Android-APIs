@@ -17,11 +17,11 @@ class NFCViewModel(
     private val _state = MutableStateFlow(NfcUiState())
     val state: StateFlow<NfcUiState> = _state
 
-    fun isNfcAvailable(value: Boolean) {
+    fun setNfcSupportedByDeviceCheck(value: Boolean) {
         _state.value = _state.value.copy(isAvailable = value)
     }
 
-    fun updateIsEnabled(value: Boolean) {
+    fun setNfcEnabledOnDeviceCheck(value: Boolean) {
         _state.value = _state.value.copy(isEnabled = value)
     }
 
