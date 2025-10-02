@@ -28,7 +28,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             NativeAndroidAPIsTheme {
-                AppNavigator() // Composables can get same ViewModel via koinViewModel()
+                AppNavigator()
             }
         }
     }
