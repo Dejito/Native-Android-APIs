@@ -9,24 +9,26 @@ import com.mobile.nativeandroidapis.nfc.data.NfcManager
 import com.mobile.nativeandroidapis.nfc.presentation.viewmodel.NFCViewModel
 import com.mobile.nativeandroidapis.router.AppNavigator
 import com.mobile.nativeandroidapis.ui.theme.NativeAndroidAPIsTheme
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
 
-    private lateinit var nfcViewModel: NFCViewModel
+    private val nfcViewModel: NFCViewModel by viewModel() // <-- from Koin
     private lateinit var nfcManager: NfcManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        nfcViewModel = ViewModelProvider(this)[NFCViewModel::class.java]
         nfcManager = NfcManager(this, nfcViewModel)
 
-        val isNFCAvailable = packageManager.hasSystemFeature(android.content.pm.PackageManager.FEATURE_NFC)
+        val isNFCAvailable = packageManager.hasSystemFeature(
+            android.content.pm.PackageManager.FEATURE_NFC
+        )
         nfcViewModel.setNfcSupportedByDeviceCheck(isNFCAvailable)
 
         setContent {
             NativeAndroidAPIsTheme {
-                AppNavigator()
+                AppNavigator() // Composables can get same ViewModel via koinViewModel()
             }
         }
     }

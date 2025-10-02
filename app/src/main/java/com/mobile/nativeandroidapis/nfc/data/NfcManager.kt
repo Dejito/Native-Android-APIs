@@ -41,16 +41,19 @@ class NfcManager(
     }
 
     fun handleIntent(intent: Intent) {
-//        if (intent.action == NfcAdapter.ACTION_TAG_DISCOVERED) {
-        if (NfcAdapter.ACTION_NDEF_DISCOVERED == intent.action) {
-            val tag: Tag? = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG)
-            val rawMsgs = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES)
-            val messages = rawMsgs?.map { it as NdefMessage }?.toTypedArray()
+        when (intent.action) {
+            NfcAdapter.ACTION_NDEF_DISCOVERED,
+            NfcAdapter.ACTION_TAG_DISCOVERED,
+            NfcAdapter.ACTION_TECH_DISCOVERED -> {
+                val tag: Tag? = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG)
+                val rawMsgs = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES)
+                val messages = rawMsgs?.map { it as NdefMessage }?.toTypedArray()
 
-            if (viewModel.state.value.isWriting) {
-                viewModel.writeTag(tag)
-            } else {
-                viewModel.readTag(tag, messages)
+                if (viewModel.nfcState.value.isWriting) {
+                    viewModel.writeTag(tag)
+                } else {
+                    viewModel.readTag(tag, messages)
+                }
             }
         }
     }

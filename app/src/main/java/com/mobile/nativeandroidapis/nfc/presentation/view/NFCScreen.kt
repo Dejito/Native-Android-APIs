@@ -8,17 +8,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mobile.nativeandroidapis.nfc.presentation.viewmodel.NFCViewModel
+import com.mobile.nativeandroidapis.router.Navigator
 import com.mobile.nativeandroidapis.ui.screens.CustomAppBar
 import com.mobile.nativeandroidapis.ui.screens.TitleText
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun NfcScreen(nfcViewModel: NFCViewModel = koinViewModel()) {
+fun NfcScreen(navigator: Navigator, nfcViewModel: NFCViewModel = koinViewModel()) {
 
-    val uiState by nfcViewModel.state.collectAsStateWithLifecycle()
+    val uiState = nfcViewModel.nfcState.collectAsState().value
 
     Scaffold(
-        topBar = { CustomAppBar(title = "NFC Screen") }
+        topBar = { CustomAppBar(title = "NFC Screen", onClick = { navigator.navigateBack() }) }
     ) { paddingValues ->
         Column(
             modifier = Modifier

@@ -42,7 +42,7 @@ fun AppNavigator() {
             DisplayScannedQRScreen(navigation)
         }
         composable(Routes.NFCScreen.route) {
-            NfcScreen()
+            NfcScreen(navigation)
         }
 
     }
