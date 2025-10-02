@@ -1,6 +1,9 @@
 package com.mobile.nativeandroidapis.router
 
 import android.annotation.SuppressLint
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -21,7 +24,22 @@ fun AppNavigator() {
     val navController = rememberNavController()
     val navigation = Navigator(navController)
 
-    NavHost(navController, startDestination = Routes.Home.route) {
+    NavHost(
+        navController,
+        startDestination = Routes.Home.route,
+        enterTransition = {
+            fadeIn(animationSpec = tween(500))
+        },
+        exitTransition = {
+            fadeOut(animationSpec = tween(500))
+        },
+        popEnterTransition = {
+            fadeIn(animationSpec = tween(500))
+        },
+        popExitTransition = {
+            fadeOut(animationSpec = tween(500))
+        }
+    ) {
 
         composable(Routes.Home.route) {
             AppHomepage(navigation)
