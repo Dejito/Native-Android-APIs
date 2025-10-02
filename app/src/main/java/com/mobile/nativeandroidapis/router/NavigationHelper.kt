@@ -26,6 +26,10 @@ class Navigator(private val navController: NavHostController) {
         navController.navigate(Routes.DisplayScannedQRScreen.route)
     }
 
+    fun navToNFCScreen(){
+        navController.navigate(Routes.NFCScreen.route)
+    }
+
     fun navigateBack() {
         navController.navigateUp()
     }

@@ -38,7 +38,7 @@ import java.util.UUID
 
 
 @SuppressLint("MissingPermission")
-class AndroidBluetoothController(
+class BluetoothControllerImplementation(
     private val context: Context
 ): BluetoothController {
 
@@ -246,7 +246,8 @@ class AndroidBluetoothController(
         return context.checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED
     }
 
-    companion object {
-        const val SERVICE_UUID = "27b7d1da-08c7-4505-a6d1-2459987e5e2d"
+    companion object Companion {
+        const val SERVICE_UUID = "550e8400-e29b-41d4-a716-446655440000"
+//        const val SERVICE_UUID = "27b7d1da-08c7-4505-a6d1-2459987e5e2d"
     }
 }
