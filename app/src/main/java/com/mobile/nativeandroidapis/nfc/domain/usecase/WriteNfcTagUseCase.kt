@@ -25,12 +25,3 @@ class WriteNfcTagUseCase {
         }
     }
 }
-
-//val uriRecord = ByteArray(0).let { emptyByteArray ->
-//    NdefRecord(
-//        TNF_ABSOLUTE_URI,
-//        "https://developer.android.com/index.html".toByteArray(Charset.forName("US-ASCII")),
-//        emptyByteArray,
-//        emptyByteArray
-//    )
-//}

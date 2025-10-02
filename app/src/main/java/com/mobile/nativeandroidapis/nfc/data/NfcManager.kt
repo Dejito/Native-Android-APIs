@@ -3,6 +3,8 @@ package com.mobile.nativeandroidapis.nfc.data
 
 import android.app.Activity
 import android.app.PendingIntent
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.nfc.NdefMessage
@@ -57,4 +59,28 @@ class NfcManager(
             }
         }
     }
+
+
+    private val stateReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            if (intent.action == NfcAdapter.ACTION_ADAPTER_STATE_CHANGED) {
+                when (intent.getIntExtra(NfcAdapter.EXTRA_ADAPTER_STATE, NfcAdapter.STATE_OFF)) {
+                    NfcAdapter.STATE_OFF -> viewModel.setNfcEnabledOnDeviceCheck(false)
+                    NfcAdapter.STATE_ON -> viewModel.setNfcEnabledOnDeviceCheck(true)
+                }
+            }
+        }
+    }
+
+    fun registerReceiver() {
+        val filter = IntentFilter(NfcAdapter.ACTION_ADAPTER_STATE_CHANGED)
+        activity.registerReceiver(stateReceiver, filter)
+    }
+
+    fun unregisterReceiver() {
+        activity.unregisterReceiver(stateReceiver)
+    }
+
+
+
 }

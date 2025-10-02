@@ -36,12 +36,15 @@ class MainActivity : ComponentActivity() {
     override fun onResume() {
         super.onResume()
         nfcManager.onResume()
+        nfcManager.registerReceiver()
     }
 
     override fun onPause() {
         super.onPause()
         nfcManager.onPause()
+        nfcManager.unregisterReceiver()
     }
+
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
