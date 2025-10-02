@@ -8,17 +8,16 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.*
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mobile.nativeandroidapis.nfc.presentation.viewmodel.NFCViewModel
 import com.mobile.nativeandroidapis.router.Navigator
 import com.mobile.nativeandroidapis.ui.screens.CustomAppBar
-import com.mobile.nativeandroidapis.ui.screens.TitleText
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -41,11 +40,10 @@ fun NfcScreen(
                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
             ) {
                 if (!uiState.isAvailable) {
-                    Text(text = "Sorry! Your phone does not support NFC.")
+                    Text(text = "Sorry! Your device does not support NFC.")
                 }
 
                 if (uiState.isAvailable) {
-                    // --- NFC Status ---
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically,
@@ -94,7 +92,6 @@ fun NfcScreen(
                         }
                     }
 
-                    // --- Mode Section ---
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically,
@@ -116,7 +113,6 @@ fun NfcScreen(
                         }
                     }
 
-                    // --- Message Input ---
                     if (uiState.isWriting) {
                         OutlinedTextField(
                             value = uiState.messageToWrite,
@@ -127,13 +123,20 @@ fun NfcScreen(
                         )
                     }
 
-                    Divider(modifier = Modifier.padding(top = 16.dp, bottom = 4.dp))
+                    HorizontalDivider(
+                        modifier = Modifier.padding(top = 16.dp, bottom = 4.dp),
+                        thickness = DividerDefaults.Thickness,
+                        color = DividerDefaults.color
+                    )
 
-                    // --- Records Section ---
                     SelectionContainer {
                         Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
                             Text(text = getSection("TechList", uiState.techList))
-                            Divider(modifier = Modifier.padding(vertical = 4.dp))
+                            HorizontalDivider(
+                                modifier = Modifier.padding(vertical = 4.dp),
+                                thickness = DividerDefaults.Thickness,
+                                color = DividerDefaults.color
+                            )
                             Text(text = getSection("Records", uiState.records))
                         }
                     }
