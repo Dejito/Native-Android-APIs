@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.mobile.nativeandroidapis.sqlite_cypher.presentation.viewmodel.SqlCipherViewModel
 import com.mobile.nativeandroidapis.sqlite_cypher.data.AppDatabase
+import com.mobile.nativeandroidapis.sqlite_cypher.data.FakeEntity
 
 
 @SuppressLint("NewApi")
@@ -21,7 +22,7 @@ import com.mobile.nativeandroidapis.sqlite_cypher.data.AppDatabase
 fun SqlCipherScreen(
     db: AppDatabase,
     modifier: Modifier = Modifier
-    ) {
+) {
     val viewModel: SqlCipherViewModel = viewModel(
         factory = object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -32,6 +33,8 @@ fun SqlCipherScreen(
     )
 
     var text by remember { mutableStateOf("") }
+    var editText by remember { mutableStateOf("") }
+    var editingItem by remember { mutableStateOf<FakeEntity?>(null) }
 
     Column(
         modifier = modifier
@@ -71,12 +74,60 @@ fun SqlCipherScreen(
                         .padding(vertical = 4.dp),
                     elevation = CardDefaults.cardElevation(4.dp)
                 ) {
-                    Text(
-                        text = "ID: ${item.id}, Name: ${item.name}",
-                        modifier = Modifier.padding(12.dp)
-                    )
+                    Column(Modifier.padding(12.dp)) {
+                        Text("ID: ${item.id}, Name: ${item.name}")
+
+                        Spacer(modifier = Modifier.height(8.dp))
+
+                        Row {
+                            Button(
+                                onClick = {
+                                    editingItem = item
+                                    editText = item.name
+                                },
+                                modifier = Modifier.padding(end = 8.dp)
+                            ) {
+                                Text("Edit")
+                            }
+
+                            Button(
+                                onClick = { viewModel.deleteItem(item) },
+                                colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.error)
+                            ) {
+                                Text("Delete")
+                            }
+                        }
+                    }
                 }
             }
         }
+    }
+
+    // Edit Dialog
+    if (editingItem != null) {
+        AlertDialog(
+            onDismissRequest = { editingItem = null },
+            confirmButton = {
+                Button(onClick = {
+                    editingItem?.let { viewModel.updateItem(it, editText) }
+                    editingItem = null
+                }) {
+                    Text("Save")
+                }
+            },
+            dismissButton = {
+                Button(onClick = { editingItem = null }) {
+                    Text("Cancel")
+                }
+            },
+            title = { Text("Edit Item") },
+            text = {
+                OutlinedTextField(
+                    value = editText,
+                    onValueChange = { editText = it },
+                    label = { Text("New Name") }
+                )
+            }
+        )
     }
 }

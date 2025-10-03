@@ -30,4 +30,18 @@ class SqlCipherViewModel(private val db: AppDatabase) : ViewModel() {
             _items.addAll(result)
         }
     }
+
+    fun updateItem(item: FakeEntity, newName: String) {
+        viewModelScope.launch {
+            db.getFakeDao().update(item.copy(name = newName))
+            retrieveItems()
+        }
+    }
+
+    fun deleteItem(item: FakeEntity) {
+        viewModelScope.launch {
+            db.getFakeDao().delete(item)
+            retrieveItems()
+        }
+    }
 }
