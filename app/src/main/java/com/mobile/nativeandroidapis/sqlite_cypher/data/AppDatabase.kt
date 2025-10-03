@@ -11,11 +11,11 @@ import net.sqlcipher.database.SupportFactory
 abstract class AppDatabase : RoomDatabase() {
 
     companion object {
-        private val passPhrase: ByteArray = SQLiteDatabase.getBytes("passphraasefajsfklasf".toCharArray())
+        private val passPhrase: ByteArray = SQLiteDatabase.getBytes("native-app-db-key1237792001".toCharArray())
         val factory = SupportFactory(passPhrase)
 
         fun getInstance(context: Context): AppDatabase {
-            return Room.databaseBuilder(context, AppDatabase::class.java, "encrypted_db")
+            return Room.databaseBuilder(context, AppDatabase::class.java, "native_feat_db")
                 .openHelperFactory(factory = factory)
                 .build()
         }

@@ -39,7 +39,8 @@ fun SqlCipherScreen(
     var editingItem by remember { mutableStateOf<FakeEntity?>(null) }
 
     Scaffold(
-      topBar = { CustomAppBar(title = "SQLCipher") }
+      topBar = { CustomAppBar(title = "SQLCipher",
+          onClick = { navigation.navigateBack() }) }
     ) { paddingValues ->
         Column(
             modifier = Modifier
