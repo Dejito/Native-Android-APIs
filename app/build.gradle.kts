@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -85,9 +86,14 @@ dependencies {
 
 
     //Room library and SQLite cipher
-    implementation( "androidx.room:room-ktx:2.6.1")
-    annotationProcessor ("androidx.room:room-compiler:2.6.1") // for java projects
-    kapt( "androidx.room:room-compiler:2.6.1" )// For Kotlin projects
+    implementation("androidx.room:room-runtime:2.6.1")
+    ksp("androidx.room:room-compiler:1.12.0")
+    implementation("androidx.room:room-ktx:2.6.1")
+//    implementation( "androidx.room:room-ktx:2.6.1")
+//    annotationProcessor ("androidx.room:room-compiler:2.6.1") // for java projects
+//    kapt( "androidx.room:room-compiler:2.6.1" )// For Kotlin projects
+
+
     implementation( "net.zetetic:android-database-sqlcipher:4.5.3")
     implementation( "androidx.sqlite:sqlite:2.4.0")
 
