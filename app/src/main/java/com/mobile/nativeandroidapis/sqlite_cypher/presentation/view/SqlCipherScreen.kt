@@ -12,16 +12,18 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.mobile.nativeandroidapis.router.Navigator
 import com.mobile.nativeandroidapis.sqlite_cypher.presentation.viewmodel.SqlCipherViewModel
 import com.mobile.nativeandroidapis.sqlite_cypher.data.AppDatabase
 import com.mobile.nativeandroidapis.sqlite_cypher.data.FakeEntity
+import com.mobile.nativeandroidapis.ui.screens.CustomAppBar
 
 
 @SuppressLint("NewApi")
 @Composable
 fun SqlCipherScreen(
     db: AppDatabase,
-    modifier: Modifier = Modifier
+    navigation: Navigator
 ) {
     val viewModel: SqlCipherViewModel = viewModel(
         factory = object : ViewModelProvider.Factory {
@@ -36,98 +38,105 @@ fun SqlCipherScreen(
     var editText by remember { mutableStateOf("") }
     var editingItem by remember { mutableStateOf<FakeEntity?>(null) }
 
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        OutlinedTextField(
-            value = text,
-            onValueChange = { text = it },
-            label = { Text("Enter Name") },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Spacer(modifier = Modifier.height(12.dp))
-
-        Button(onClick = {
-            if (text.isNotEmpty()) {
-                viewModel.insertItem(text)
-                text = ""
-            }
-        }) {
-            Text("Insert into DB")
-        }
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        Text("Saved Entries:", style = MaterialTheme.typography.titleMedium)
-
-        LazyColumn(
-            modifier = Modifier.fillMaxWidth()
+    Scaffold(
+      topBar = { CustomAppBar(title = "SQLCipher") }
+    ) { paddingValues ->
+        Column(
+            modifier = Modifier
+                .padding(paddingValues)
+                .fillMaxSize()
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            items(viewModel.items) { item ->
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 4.dp),
-                    elevation = CardDefaults.cardElevation(4.dp)
-                ) {
-                    Column(Modifier.padding(12.dp)) {
-                        Text("ID: ${item.id}, Name: ${item.name}")
+            OutlinedTextField(
+                value = text,
+                onValueChange = { text = it },
+                label = { Text("Enter Name") },
+                modifier = Modifier.fillMaxWidth()
+            )
 
-                        Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(12.dp))
 
-                        Row {
-                            Button(
-                                onClick = {
-                                    editingItem = item
-                                    editText = item.name
-                                },
-                                modifier = Modifier.padding(end = 8.dp)
-                            ) {
-                                Text("Edit")
-                            }
+            Button(onClick = {
+                if (text.isNotEmpty()) {
+                    viewModel.insertItem(text)
+                    text = ""
+                }
+            }) {
+                Text("Insert into DB")
+            }
 
-                            Button(
-                                onClick = { viewModel.deleteItem(item) },
-                                colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.error)
-                            ) {
-                                Text("Delete")
+            Spacer(modifier = Modifier.height(24.dp))
+
+            Text("Saved Entries:", style = MaterialTheme.typography.titleMedium)
+
+            LazyColumn(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                items(viewModel.items) { item ->
+                    Card(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 4.dp),
+                        elevation = CardDefaults.cardElevation(4.dp)
+                    ) {
+                        Column(Modifier.padding(12.dp)) {
+                            Text("ID: ${item.id}, Name: ${item.name}")
+
+                            Spacer(modifier = Modifier.height(8.dp))
+
+                            Row {
+                                Button(
+                                    onClick = {
+                                        editingItem = item
+                                        editText = item.name
+                                    },
+                                    modifier = Modifier.padding(end = 8.dp)
+                                ) {
+                                    Text("Edit")
+                                }
+
+                                Button(
+                                    onClick = { viewModel.deleteItem(item) },
+                                    colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.error)
+                                ) {
+                                    Text("Delete")
+                                }
                             }
                         }
                     }
                 }
             }
         }
+
+        // Edit Dialog
+        if (editingItem != null) {
+            AlertDialog(
+                onDismissRequest = { editingItem = null },
+                confirmButton = {
+                    Button(onClick = {
+                        editingItem?.let { viewModel.updateItem(it, editText) }
+                        editingItem = null
+                    }) {
+                        Text("Save")
+                    }
+                },
+                dismissButton = {
+                    Button(onClick = { editingItem = null }) {
+                        Text("Cancel")
+                    }
+                },
+                title = { Text("Edit Item") },
+                text = {
+                    OutlinedTextField(
+                        value = editText,
+                        onValueChange = { editText = it },
+                        label = { Text("New Name") }
+                    )
+                }
+            )
+        }
     }
 
-    // Edit Dialog
-    if (editingItem != null) {
-        AlertDialog(
-            onDismissRequest = { editingItem = null },
-            confirmButton = {
-                Button(onClick = {
-                    editingItem?.let { viewModel.updateItem(it, editText) }
-                    editingItem = null
-                }) {
-                    Text("Save")
-                }
-            },
-            dismissButton = {
-                Button(onClick = { editingItem = null }) {
-                    Text("Cancel")
-                }
-            },
-            title = { Text("Edit Item") },
-            text = {
-                OutlinedTextField(
-                    value = editText,
-                    onValueChange = { editText = it },
-                    label = { Text("New Name") }
-                )
-            }
-        )
-    }
+
 }

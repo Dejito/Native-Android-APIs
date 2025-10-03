@@ -29,6 +29,9 @@ class Navigator(private val navController: NavHostController) {
     fun navToNFCScreen(){
         navController.navigate(Routes.NFCScreen.route)
     }
+    fun navToSQLCipher(){
+        navController.navigate(Routes.SQLCipherScreen.route)
+    }
 
     fun navigateBack() {
         navController.navigateUp()
