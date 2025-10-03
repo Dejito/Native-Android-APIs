@@ -68,7 +68,7 @@ dependencies {
     implementation(libs.coil.compose)
     implementation(libs.coil.gif)
 
-    // Use the same version for CameraX and CameraX extensions
+    // Camera libraries
     implementation(libs.camera.core)
     implementation(libs.camera.camera2)
     implementation(libs.camera.lifecycle)
@@ -82,5 +82,13 @@ dependencies {
     implementation(libs.koin.android)
     implementation(libs.koin.core)
     implementation(libs.koin.compose.viewmodel.v401)
+
+
+    //Room library and SQLite cipher
+    implementation( "androidx.room:room-ktx:2.6.1")
+    annotationProcessor ("androidx.room:room-compiler:2.6.1") // for java projects
+    kapt( "androidx.room:room-compiler:2.6.1" )// For Kotlin projects
+    implementation( "net.zetetic:android-database-sqlcipher:4.5.3")
+    implementation( "androidx.sqlite:sqlite:2.4.0")
 
 }
