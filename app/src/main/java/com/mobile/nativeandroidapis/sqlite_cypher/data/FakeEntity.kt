@@ -1,4 +1,4 @@
-package com.mobile.nativeandroidapis.sqlite_cypher.room
+package com.mobile.nativeandroidapis.sqlite_cypher.data
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

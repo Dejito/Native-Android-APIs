@@ -4,10 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.runtime.remember
 import androidx.lifecycle.ViewModelProvider
 import com.mobile.nativeandroidapis.nfc.data.NfcManager
 import com.mobile.nativeandroidapis.nfc.presentation.viewmodel.NFCViewModel
 import com.mobile.nativeandroidapis.router.AppNavigator
+import com.mobile.nativeandroidapis.sqlite_cypher.data.AppDatabase
 import com.mobile.nativeandroidapis.ui.theme.NativeAndroidAPIsTheme
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -28,7 +30,8 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             NativeAndroidAPIsTheme {
-                AppNavigator()
+                val db = remember { AppDatabase.getInstance(this) }
+                AppNavigator(db)
             }
         }
     }

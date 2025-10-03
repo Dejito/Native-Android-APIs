@@ -3,8 +3,8 @@ package com.mobile.nativeandroidapis.sqlite_cypher.presentation.viewmodel
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mobile.nativeandroidapis.sqlite_cypher.room.AppDatabase
-import com.mobile.nativeandroidapis.sqlite_cypher.room.FakeEntity
+import com.mobile.nativeandroidapis.sqlite_cypher.data.AppDatabase
+import com.mobile.nativeandroidapis.sqlite_cypher.data.FakeEntity
 import kotlinx.coroutines.launch
 
 class SqlCipherViewModel(private val db: AppDatabase) : ViewModel() {

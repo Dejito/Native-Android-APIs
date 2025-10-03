@@ -13,7 +13,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.mobile.nativeandroidapis.sqlite_cypher.presentation.viewmodel.SqlCipherViewModel
-import com.mobile.nativeandroidapis.sqlite_cypher.room.AppDatabase
+import com.mobile.nativeandroidapis.sqlite_cypher.data.AppDatabase
 
 
 @SuppressLint("NewApi")
@@ -21,7 +21,7 @@ import com.mobile.nativeandroidapis.sqlite_cypher.room.AppDatabase
 fun SqlCipherScreen(
     db: AppDatabase,
     modifier: Modifier = Modifier
-) {
+    ) {
     val viewModel: SqlCipherViewModel = viewModel(
         factory = object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {

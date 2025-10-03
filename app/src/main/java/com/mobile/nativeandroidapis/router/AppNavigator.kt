@@ -14,12 +14,13 @@ import com.mobile.nativeandroidapis.qr_code.view.DisplayScannedQRScreen
 import com.mobile.nativeandroidapis.qr_code.view.QRCodeScannerScreen
 import com.mobile.nativeandroidapis.qr_code.view.QRCodeScreen
 import com.mobile.nativeandroidapis.qr_code.view.SelectQRCodeOption
+import com.mobile.nativeandroidapis.sqlite_cypher.data.AppDatabase
 import com.mobile.nativeandroidapis.ui.screens.AppHomepage
 
 
 @SuppressLint("NewApi")
 @Composable
-fun AppNavigator() {
+fun AppNavigator(db: AppDatabase) {
 
     val navController = rememberNavController()
     val navigation = Navigator(navController)

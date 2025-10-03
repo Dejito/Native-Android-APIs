@@ -1,4 +1,4 @@
-package com.mobile.nativeandroidapis.sqlite_cypher.room
+package com.mobile.nativeandroidapis.sqlite_cypher.data
 
 import android.content.Context
 import androidx.room.Database
