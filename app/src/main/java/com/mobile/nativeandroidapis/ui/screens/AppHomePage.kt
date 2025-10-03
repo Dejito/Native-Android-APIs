@@ -57,7 +57,7 @@ fun AppHomepage(navigator: Navigator, bluetoothViewModel: BluetoothViewModel = k
                 navigator.navToNFCScreen()
             })
             AppHomePageCard(title = "SQLite Cypher", onClick = {
-                context.displayToastMessage("Coming soon")
+                navigator.navToSQLCipher()
             })
         }
     }
