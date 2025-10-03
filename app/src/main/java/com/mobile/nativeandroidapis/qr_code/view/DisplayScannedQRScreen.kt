@@ -37,17 +37,17 @@ fun DisplayScannedQRScreen(
             modifier = Modifier
                 .padding(paddingValues)
                 .padding(16.dp)
-                .background(Color.Gray)
+//                .background(Color.Gray)
                 .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            TitleText("Scanned QR Code", bottomPadding = 20)
+            TitleText("Encrypted text is:", bottomPadding = 20)
             TitleText(
                 decryptedQRCodeValue,
                 fontSize = 16,
                 maxLines = 2,
                 textAlign = TextAlign.Center,
-                color = Color.Red,
+                color = Color.DarkGray,
                 fontWeight = FontWeight.W500
             )
         }

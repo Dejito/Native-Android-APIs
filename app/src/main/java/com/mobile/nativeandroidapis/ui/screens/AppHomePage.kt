@@ -38,8 +38,6 @@ fun AppHomepage(navigator: Navigator, bluetoothViewModel: BluetoothViewModel = k
 
         DisabledBackPress()
 
-        val context = LocalContext.current
-
         Column(
             modifier = Modifier
                 .padding(paddingValues)
@@ -56,7 +54,7 @@ fun AppHomepage(navigator: Navigator, bluetoothViewModel: BluetoothViewModel = k
             AppHomePageCard(title = "NFC", onClick = {
                 navigator.navToNFCScreen()
             })
-            AppHomePageCard(title = "SQLite Cypher", onClick = {
+            AppHomePageCard(title = "SQLite Cipher", onClick = {
                 navigator.navToSQLCipher()
             })
         }

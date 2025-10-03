@@ -23,7 +23,11 @@ class Navigator(private val navController: NavHostController) {
     }
 
     fun navToDisplayScannedQRScreen(){
-        navController.navigate(Routes.DisplayScannedQRScreen.route)
+        navController.navigate(Routes.DisplayScannedQRScreen.route){
+            popUpTo(Routes.QRCodeScanner.route){
+                inclusive = true
+            }
+        }
     }
 
     fun navToNFCScreen(){
